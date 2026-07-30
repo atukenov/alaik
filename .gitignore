@@ -1,0 +1,29 @@
+# Node
+node_modules/
+alaik-web/dist/
+alaik-web/.env
+alaik-web/.env.*.local
+alaik-web/.env.production
+
+# Vite
+*.local
+
+# .NET
+backend/**/bin/
+backend/**/obj/
+*.user
+
+# Capacitor / iOS
+alaik-web/ios/App/Pods/
+alaik-web/ios/App/build/
+alaik-web/ios/App/App/public/
+DerivedData/
+*.xcuserstate
+
+# OS / editors
+.DS_Store
+.vs/
+.idea/
+
+# Logs
+*.log

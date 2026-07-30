@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700&family=Golos+Text:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#efe9df;font-family:'Golos Text',system-ui,sans-serif}
+a{color:#c05f3c}a:hover{color:#a44c2d}
+.dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#26201a;color:#fff;border-radius:4px;text-decoration:none}
+.dv-tname{font:600 14px/1.3 'Golos Text',system-ui,sans-serif;color:#26201a}
+.dv-intro{margin:0 0 26px;max-width:720px;font:400 13.5px/1.6 'Golos Text',system-ui,sans-serif;color:rgba(38,32,26,.62)}
+.dv-opts{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+.dv-opt{flex:none;display:flex;flex-direction:column;gap:12px;scroll-margin-top:16px}
+.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#26201a;border-radius:5px;text-decoration:none}
+.dv-olabel{display:flex;flex-direction:column;gap:3px;font:600 13px/1.3 'Golos Text',system-ui,sans-serif;color:#26201a}
+.dv-osub{font:400 11.5px/1.4 'Golos Text',system-ui,sans-serif;color:rgba(38,32,26,.5)}
+.dv-opt:target .dv-oid{background:#c05f3c;color:#fff}
+.dv-next{margin:30px 0 0;font:13px/1.6 'Golos Text',system-ui,sans-serif;color:rgba(38,32,26,.55)}
+.bezel{width:322px;border-radius:48px;background:#141210;padding:9px;box-shadow:0 26px 60px -18px rgba(60,40,20,.5),0 4px 12px rgba(0,0,0,.15)}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:98px;height:28px;background:#000;border-radius:16px;z-index:6}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Alaik · 3 визуальных направления — публичный экран гостя</span></div>
+<p class="dv-intro">Публичный экран гостя — сердце продукта: гость открывает список по ссылке, видит прогресс и бронирует подарок (кто забронировал — скрыто, сюрприз сохраняется). Показываю его в трёх тёплых направлениях. Выберите базу — дальше разверну её в полный флоу из 7 экранов (онбординг → OTP → мои списки → мастер события → список владельца → гость → профиль), кликабельный прототип, с переключателем RU/KZ/EN.</p>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><span><a class="dv-oid" href="#1a">1a</a> &nbsp;Тёплая терракота</span><span class="dv-osub">Кремовый + глиняный акцент · Unbounded / Golos · спокойно, тепло</span></div>
+<div class="dv-card"><div class="bezel"><div style="position:relative;border-radius:39px;overflow:hidden">
+<div class="island"></div>
+<div style="--bg:#f6efe4;--card:#fffcf6;--card2:#ece1cf;--text:#33291f;--muted:#9c8f7c;--accent:#c05f3c;--accentText:#fff;--line:rgba(51,41,31,.09);--disp:'Unbounded';--body:'Golos Text';--rad:20px;position:relative;width:100%;height:646px;background:var(--bg);color:var(--text);overflow:hidden;display:flex;flex-direction:column">
+<div style="height:52px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px">
+<span style="font:600 15px var(--body)">9:41</span>
+<span style="display:flex;gap:6px;align-items:center"><span style="width:18px;height:11px;border:1.5px solid var(--text);border-radius:3px;opacity:.85"></span></span>
+</div>
+<div style="position:relative;height:196px;flex:none;background:repeating-linear-gradient(135deg,rgba(0,0,0,.045) 0 10px,transparent 10px 20px),var(--card2);display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px">
+<span style="position:absolute;top:14px;left:16px;font:500 9px ui-monospace,monospace;color:var(--muted)">обложка · 3:4</span>
+<span style="align-self:flex-start;font:600 10px var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--accentText);background:var(--accent);padding:5px 11px;border-radius:100px;margin-bottom:9px">День рождения</span>
+<h1 style="margin:0;font:700 27px/1.02 var(--disp);color:var(--text)">Данияру — 30!</h1>
+<p style="margin:6px 0 0;font:500 13px var(--body);color:var(--muted)">15 августа · Список от Аяны</p>
+</div>
+<div style="flex:1;overflow:hidden;padding:16px 16px 92px">
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 14px var(--body)">Выбрано подарков</span><span style="font:600 15px var(--disp);color:var(--accent)">8 / 15</span></div>
+<div style="height:8px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:53%;height:100%;background:var(--accent);border-radius:100px"></div></div>
+</div>
+<h2 style="margin:20px 4px 12px;font:600 12px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">Подарки</h2>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px;margin-bottom:11px">
+<div style="width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Наушники Sony WH-1000XM5</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp)">149 900 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:600 12px var(--body);padding:8px 15px;border-radius:100px">Забронировать</button></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px;margin-bottom:11px;opacity:.6">
+<div style="position:relative;width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 7px,transparent 7px 14px),var(--card2)"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 20px var(--body);color:var(--accent)">✓</span></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Кофемашина De'Longhi</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">technodom.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp)">89 000 ₸</span><span style="font:600 12px var(--body);color:var(--muted)">Забронировано</span></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px">
+<div style="width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(0,0,0,.05) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Книга «Атлас мира»</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp)">12 500 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:600 12px var(--body);padding:8px 15px;border-radius:100px">Забронировать</button></div>
+</div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px 24px;background:linear-gradient(to top,var(--bg) 68%,transparent)"><button style="width:100%;border:none;height:50px;border-radius:100px;background:var(--accent);color:var(--accentText);font:600 15px var(--body)">Поделиться списком</button></div>
+</div></div></div></div>
+</div>
+
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><span><a class="dv-oid" href="#1b">1b</a> &nbsp;Праздничный коралл</span><span class="dv-osub">Розово-белый + коралл и золото · Onest · мягко, нарядно, дружелюбно</span></div>
+<div class="dv-card"><div class="bezel"><div style="position:relative;border-radius:39px;overflow:hidden">
+<div class="island"></div>
+<div style="--bg:#fcf4f1;--card:#ffffff;--card2:#f6e6df;--text:#3a2a28;--muted:#b39a92;--accent:#e0664f;--accent2:#cf9a3f;--accentText:#fff;--line:rgba(58,42,40,.07);--disp:'Onest';--body:'Onest';--rad:26px;position:relative;width:100%;height:646px;background:var(--bg);color:var(--text);overflow:hidden;display:flex;flex-direction:column">
+<div style="height:52px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px">
+<span style="font:700 15px var(--body)">9:41</span>
+<span style="display:flex;gap:6px;align-items:center"><span style="width:18px;height:11px;border:1.5px solid var(--text);border-radius:3px;opacity:.85"></span></span>
+</div>
+<div style="position:relative;height:196px;flex:none;background:repeating-linear-gradient(135deg,rgba(224,102,79,.08) 0 10px,transparent 10px 20px),var(--card2);display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px">
+<span style="position:absolute;top:14px;left:16px;font:500 9px ui-monospace,monospace;color:var(--muted)">обложка · 3:4</span>
+<span style="position:absolute;top:14px;right:16px;width:12px;height:12px;background:var(--accent2);transform:rotate(45deg)"></span>
+<span style="align-self:flex-start;font:700 10px var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--accentText);background:var(--accent);padding:5px 12px;border-radius:100px;margin-bottom:9px">День рождения</span>
+<h1 style="margin:0;font:800 28px/1.0 var(--disp);color:var(--text)">Данияру — 30!</h1>
+<p style="margin:6px 0 0;font:500 13px var(--body);color:var(--muted)">15 августа · Список от Аяны</p>
+</div>
+<div style="flex:1;overflow:hidden;padding:16px 16px 92px">
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:15px 17px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 18px -10px rgba(224,102,79,.4)">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 14px var(--body)">Выбрано подарков</span><span style="font:800 15px var(--disp);color:var(--accent)">8 / 15</span></div>
+<div style="height:9px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:53%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px"></div></div>
+</div>
+<h2 style="margin:20px 4px 12px;font:700 12px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">Подарки</h2>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:12px;margin-bottom:11px">
+<div style="width:66px;height:66px;flex:none;border-radius:18px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Наушники Sony WH-1000XM5</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:800 14px var(--disp)">149 900 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:700 12px var(--body);padding:9px 16px;border-radius:100px">Забронировать</button></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:12px;margin-bottom:11px;opacity:.6">
+<div style="position:relative;width:66px;height:66px;flex:none;border-radius:18px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2)"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 20px var(--body);color:var(--accent)">✓</span></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Кофемашина De'Longhi</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">technodom.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:800 14px var(--disp)">89 000 ₸</span><span style="font:700 12px var(--body);color:var(--muted)">Забронировано</span></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:12px">
+<div style="width:66px;height:66px;flex:none;border-radius:18px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Книга «Атлас мира»</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:800 14px var(--disp)">12 500 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:700 12px var(--body);padding:9px 16px;border-radius:100px">Забронировать</button></div>
+</div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px 24px;background:linear-gradient(to top,var(--bg) 68%,transparent)"><button style="width:100%;border:none;height:52px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 15px var(--body)">Поделиться списком</button></div>
+</div></div></div></div>
+</div>
+
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><span><a class="dv-oid" href="#1c">1c</a> &nbsp;Тёплый вечер</span><span class="dv-osub">Тёмно-графитовый + янтарь · Unbounded / Manrope · премиально, камерно</span></div>
+<div class="dv-card"><div class="bezel"><div style="position:relative;border-radius:39px;overflow:hidden">
+<div class="island"></div>
+<div style="--bg:#211d19;--card:#2c2723;--card2:#39312a;--text:#f3ece0;--muted:#a89a89;--accent:#e6a63a;--accentText:#241d12;--line:rgba(255,255,255,.08);--disp:'Unbounded';--body:'Manrope';--rad:22px;position:relative;width:100%;height:646px;background:var(--bg);color:var(--text);overflow:hidden;display:flex;flex-direction:column">
+<div style="height:52px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px">
+<span style="font:600 15px var(--body)">9:41</span>
+<span style="display:flex;gap:6px;align-items:center"><span style="width:18px;height:11px;border:1.5px solid var(--text);border-radius:3px;opacity:.85"></span></span>
+</div>
+<div style="position:relative;height:196px;flex:none;background:linear-gradient(to top,var(--bg),transparent 70%),repeating-linear-gradient(135deg,rgba(230,166,58,.08) 0 10px,transparent 10px 20px),var(--card2);display:flex;flex-direction:column;justify-content:flex-end;padding:16px 18px">
+<span style="position:absolute;top:14px;left:16px;font:500 9px ui-monospace,monospace;color:var(--muted)">обложка · 3:4</span>
+<span style="align-self:flex-start;font:600 10px var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--accentText);background:var(--accent);padding:5px 11px;border-radius:100px;margin-bottom:9px">День рождения</span>
+<h1 style="margin:0;font:700 27px/1.02 var(--disp);color:var(--text)">Данияру — 30!</h1>
+<p style="margin:6px 0 0;font:500 13px var(--body);color:var(--muted)">15 августа · Список от Аяны</p>
+</div>
+<div style="flex:1;overflow:hidden;padding:16px 16px 92px">
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:14px 16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 14px var(--body)">Выбрано подарков</span><span style="font:600 15px var(--disp);color:var(--accent)">8 / 15</span></div>
+<div style="height:8px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:53%;height:100%;background:var(--accent);border-radius:100px"></div></div>
+</div>
+<h2 style="margin:20px 4px 12px;font:600 12px var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)">Подарки</h2>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px;margin-bottom:11px">
+<div style="width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(230,166,58,.1) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Наушники Sony WH-1000XM5</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp);color:var(--text)">149 900 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:700 12px var(--body);padding:8px 15px;border-radius:100px">Забронировать</button></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px;margin-bottom:11px;opacity:.5">
+<div style="position:relative;width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(230,166,58,.1) 0 7px,transparent 7px 14px),var(--card2)"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:700 20px var(--body);color:var(--accent)">✓</span></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Кофемашина De'Longhi</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">technodom.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp);color:var(--text)">89 000 ₸</span><span style="font:600 12px var(--body);color:var(--muted)">Забронировано</span></div>
+</div></div>
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:11px">
+<div style="width:66px;height:66px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(230,166,58,.1) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font:600 14px/1.25 var(--body)">Книга «Атлас мира»</span>
+<span style="font:500 11px var(--body);color:var(--muted);margin-top:2px">meloman.kz</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:700 14px var(--disp);color:var(--text)">12 500 ₸</span><button style="border:none;background:var(--accent);color:var(--accentText);font:700 12px var(--body);padding:8px 15px;border-radius:100px">Забронировать</button></div>
+</div></div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px 24px;background:linear-gradient(to top,var(--bg) 68%,transparent)"><button style="width:100%;border:none;height:50px;border-radius:100px;background:var(--accent);color:var(--accentText);font:700 15px var(--body)">Поделиться списком</button></div>
+</div></div></div></div>
+</div>
+
+</div>
+<p class="dv-next">Дальше можно: «беру <a class="dv-oid" href="#1a">1a</a>, разверни полный флоу из 7 экранов» · «<a class="dv-oid" href="#1b">1b</a>, но акцент менее яркий» · «смешай тепло <a class="dv-oid" href="#1a">1a</a> с тёмным <a class="dv-oid" href="#1c">1c</a>» · «покажи ещё направления»</p>
+</section>
+</x-dc>
+</body>
+</html>

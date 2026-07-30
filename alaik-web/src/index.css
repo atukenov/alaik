@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Onest', system-ui, sans-serif;
+  color: #3a2a28;
+  /* Warm coral gradient behind the centered app column. */
+  background: radial-gradient(120% 90% at 50% 0%, #fdeee9 0%, #f3ddd4 55%, #eccdc0 100%)
+    fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  /* Tap feedback used across interactive elements. */
+  .tapc {
+    @apply cursor-pointer transition-transform duration-100 ease-out active:scale-[0.97];
+  }
+  .field {
+    @apply w-full border-[1.5px] border-line rounded-field bg-card px-4 text-[15px]
+      text-text outline-none placeholder:text-muted focus:border-accent;
+  }
+  .btn-primary {
+    @apply w-full h-[54px] rounded-pill bg-primary text-white font-bold text-base
+      flex items-center justify-center gap-2 tapc disabled:opacity-50;
+  }
+  .section-label {
+    @apply text-[12px] font-bold tracking-[0.06em] uppercase text-muted;
+  }
+}
+
+/* Hide scrollbars inside the app column for an app-like feel. */
+.no-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}

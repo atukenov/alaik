@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Alaik.Api/Alaik.Api.csproj" />
+  <Project Path="Alaik.Domain/Alaik.Domain.csproj" />
+  <Project Path="Alaik.Infrastructure/Alaik.Infrastructure.csproj" />
+</Solution>

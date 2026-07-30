@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Onest',system-ui,sans-serif}
+a{color:#e0664f}a:hover{color:#c9553f}
+.bezel{width:322px;border-radius:48px;background:#141210;padding:9px;box-shadow:0 30px 70px -20px rgba(120,60,40,.5),0 4px 12px rgba(0,0,0,.15)}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:98px;height:28px;background:#000;border-radius:16px;z-index:30}
+.scr{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scr::-webkit-scrollbar{width:0}
+.tapc{cursor:pointer;transition:transform .12s ease,opacity .12s ease}
+.tapc:active{transform:scale(.97)}
+.fadein{animation:fadein .28s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:radial-gradient(120% 90% at 50% 0%,#fdeee9 0%,#f3ddd4 55%,#eccdc0 100%);display:flex;flex-direction:column;align-items:center;padding:34px 0 54px">
+<div style="font:600 12px 'Onest';letter-spacing:.04em;color:rgba(58,42,40,.5);margin-bottom:16px">Alaik · интерактивный прототип · нажимайте кнопки</div>
+
+<div class="bezel"><div style="position:relative;border-radius:39px;overflow:hidden">
+<div class="island"></div>
+<div style="--bg:#fcf4f1;--card:#ffffff;--card2:#f6e6df;--text:#3a2a28;--muted:#a8938b;--accent:#e0664f;--accent2:#cf9a3f;--accentText:#fff;--line:rgba(58,42,40,.08);--rad:24px;position:relative;width:100%;height:740px;background:var(--bg);color:var(--text);overflow:hidden;display:flex;flex-direction:column;font-family:'Onest'">
+
+<div style="height:50px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 6px;z-index:10;position:relative">
+<span style="font:700 15px 'Onest'">9:41</span>
+<span style="width:18px;height:11px;border:1.5px solid var(--text);border-radius:3px;opacity:.8"></span>
+</div>
+
+<div style="flex:1;position:relative;overflow:hidden">
+
+<sc-if value="{{ isOb }}" hint-placeholder-val="{{ true }}">
+<div class="scr fadein" style="display:flex;flex-direction:column;padding:8px 24px 30px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+<div class="tapc" onClick="{{ cycleLang }}" style="display:flex;align-items:center;gap:5px;padding:7px 11px;border-radius:100px;background:var(--card2);font:700 11px 'Onest';color:var(--text)">{{ langLabel }}</div>
+<div class="tapc" onClick="{{ goAuth }}" style="font:600 13px 'Onest';color:var(--muted)">{{ t.skip }}</div>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px">
+<div style="position:relative;aspect-ratio:1/1;border-radius:32px;background:repeating-linear-gradient(135deg,rgba(224,102,79,.1) 0 12px,transparent 12px 24px),linear-gradient(160deg,#f9e3db,#f4d3c6);display:flex;align-items:center;justify-content:center">
+<span style="font:500 11px ui-monospace,monospace;color:var(--muted)">{{ obArt }}</span>
+<span style="position:absolute;top:18px;right:18px;width:16px;height:16px;background:var(--accent2);transform:rotate(45deg)"></span>
+</div>
+<div>
+<h1 style="margin:0 0 12px;font:800 27px/1.08 'Onest';color:var(--text)">{{ obTitle }}</h1>
+<p style="margin:0;font:400 15px/1.5 'Onest';color:var(--muted)">{{ obText }}</p>
+</div>
+</div>
+<div style="display:flex;gap:7px;justify-content:center;margin:22px 0 20px">
+<sc-for list="{{ obDots }}" as="d" hint-placeholder-count="3"><span style="width:{{ d.w }};height:7px;border-radius:100px;background:{{ d.bg }};transition:all .2s"></span></sc-for>
+</div>
+<button class="tapc" onClick="{{ obNext }}" style="width:100%;border:none;height:54px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 16px 'Onest'">{{ obBtn }}</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAuth }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="display:flex;flex-direction:column;padding:14px 24px 30px">
+<div class="tapc" onClick="{{ authBack }}" style="width:40px;height:40px;border-radius:100px;background:var(--card2);display:flex;align-items:center;justify-content:center;color:var(--text)">
+<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+</div>
+<div style="margin-top:26px;display:flex;align-items:center;gap:10px">
+<div style="width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font:800 22px 'Onest'">a</div>
+</div>
+<sc-if value="{{ authPhone }}" hint-placeholder-val="{{ true }}">
+<h1 style="margin:22px 0 8px;font:800 24px/1.1 'Onest'">{{ t.authTitle }}</h1>
+<p style="margin:0 0 26px;font:400 14px/1.5 'Onest';color:var(--muted)">{{ t.authSub }}</p>
+<label style="font:600 12px 'Onest';color:var(--muted)">{{ t.phone }}</label>
+<div style="display:flex;align-items:center;gap:8px;margin-top:8px;border:1.5px solid var(--line);border-radius:16px;padding:0 14px;background:var(--card)">
+<span style="font:600 16px 'Onest';color:var(--text)">+7</span>
+<input value="{{ phone }}" onInput="{{ setPhone }}" placeholder="700 000 00 00" style="flex:1;border:none;outline:none;background:transparent;font:500 16px 'Onest';color:var(--text);height:54px" />
+</div>
+<button class="tapc" onClick="{{ toOtp }}" style="margin-top:auto;width:100%;border:none;height:54px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 16px 'Onest'">{{ t.continue }}</button>
+</sc-if>
+<sc-if value="{{ authOtp }}" hint-placeholder-val="{{ false }}">
+<h1 style="margin:22px 0 8px;font:800 24px/1.1 'Onest'">{{ t.otpTitle }}</h1>
+<p style="margin:0 0 26px;font:400 14px/1.5 'Onest';color:var(--muted)">{{ t.otpSub }} +7 {{ phone }}</p>
+<div style="display:flex;gap:12px;justify-content:space-between">
+<sc-for list="{{ otpBoxes }}" as="o" hint-placeholder-count="4"><div style="flex:1;height:64px;border-radius:16px;border:1.5px solid {{ o.bd }};background:var(--card);display:flex;align-items:center;justify-content:center;font:700 26px 'Onest';color:var(--text)">{{ o.v }}</div></sc-for>
+</div>
+<p style="margin:18px 0 0;font:500 13px 'Onest';color:var(--muted)">{{ t.resend }} · 0:47</p>
+<button class="tapc" onClick="{{ confirmOtp }}" style="margin-top:auto;width:100%;border:none;height:54px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 16px 'Onest'">{{ t.confirm }}</button>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLists }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="padding:6px 20px 24px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0 16px">
+<h1 style="margin:0;font:800 24px 'Onest'">{{ t.hi }}</h1>
+<div style="width:42px;height:42px;border-radius:100px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.12) 0 6px,transparent 6px 12px),var(--card2);display:flex;align-items:center;justify-content:center;font:700 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+</div>
+<div style="display:flex;gap:6px;background:var(--card2);padding:5px;border-radius:100px;margin-bottom:18px">
+<div class="tapc" onClick="{{ segMine }}" style="flex:1;text-align:center;padding:9px;border-radius:100px;font:600 13px 'Onest';background:{{ segMineBg }};color:{{ segMineFg }};box-shadow:{{ segMineSh }}">{{ t.segMine }}</div>
+<div class="tapc" onClick="{{ segRes }}" style="flex:1;text-align:center;padding:9px;border-radius:100px;font:600 13px 'Onest';background:{{ segResBg }};color:{{ segResFg }};box-shadow:{{ segResSh }}">{{ t.segReserved }}</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px">
+<sc-for list="{{ shownEvents }}" as="e" hint-placeholder-count="3">
+<div class="tapc" onClick="{{ e.onOpen }}" style="border-radius:var(--rad);overflow:hidden;background:var(--card);border:1px solid var(--line);box-shadow:0 8px 20px -14px rgba(120,60,40,.5)">
+<div style="position:relative;height:104px;background:repeating-linear-gradient(135deg,rgba(0,0,0,.04) 0 10px,transparent 10px 20px),{{ e.tint }};display:flex;align-items:flex-end;padding:12px">
+<span style="font:700 10px 'Onest';letter-spacing:.04em;text-transform:uppercase;color:var(--accentText);background:var(--accent);padding:4px 10px;border-radius:100px">{{ e.typeLabel }}</span>
+</div>
+<div style="padding:13px 15px 15px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span style="font:700 16px/1.2 'Onest'">{{ e.title }}</span><span style="font:500 12px 'Onest';color:var(--muted);white-space:nowrap">{{ e.date }}</span></div>
+<div style="margin-top:11px;height:7px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:{{ e.pct }};height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px"></div></div>
+<div style="margin-top:8px;font:500 12px 'Onest';color:var(--muted)">{{ e.sub }}</div>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWizard }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="display:flex;flex-direction:column;padding:14px 22px 28px">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+<div class="tapc" onClick="{{ wizBack }}" style="width:40px;height:40px;border-radius:100px;background:var(--card2);display:flex;align-items:center;justify-content:center;color:var(--text)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+<span style="font:700 17px 'Onest'">{{ t.wizTitle }}</span>
+</div>
+<div style="display:flex;gap:6px;margin:14px 0 22px"><div style="flex:1;height:5px;border-radius:100px;background:var(--accent)"></div><div style="flex:1;height:5px;border-radius:100px;background:{{ wizStep2Bg }}"></div></div>
+<sc-if value="{{ wizTypeStep }}" hint-placeholder-val="{{ true }}">
+<h2 style="margin:0 0 16px;font:800 20px 'Onest'">{{ t.wizType }}</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<sc-for list="{{ wizTypes }}" as="wt" hint-placeholder-count="4">
+<div class="tapc" onClick="{{ wt.onSelect }}" style="border-radius:20px;overflow:hidden;border:2px solid {{ wt.bd }};background:var(--card)">
+<div style="height:78px;background:repeating-linear-gradient(135deg,rgba(0,0,0,.04) 0 9px,transparent 9px 18px),{{ wt.tint }}"></div>
+<div style="padding:11px 12px;font:600 13px 'Onest';color:var(--text)">{{ wt.label }}</div>
+</div>
+</sc-for>
+</div>
+<button class="tapc" onClick="{{ wizNext }}" style="margin-top:auto;width:100%;border:none;height:54px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 16px 'Onest'">{{ t.continue }}</button>
+</sc-if>
+<sc-if value="{{ wizDetailStep }}" hint-placeholder-val="{{ false }}">
+<div style="height:120px;border-radius:20px;background:repeating-linear-gradient(135deg,rgba(0,0,0,.04) 0 10px,transparent 10px 20px),{{ wizPickTint }};display:flex;align-items:flex-end;padding:12px;margin-bottom:18px"><span style="font:700 10px 'Onest';text-transform:uppercase;letter-spacing:.04em;color:#fff;background:var(--accent);padding:4px 10px;border-radius:100px">{{ wizPickLabel }}</span></div>
+<label style="font:600 12px 'Onest';color:var(--muted)">{{ t.fTitle }}</label>
+<input value="{{ evTitle }}" onInput="{{ setTitle }}" placeholder="Данияру — 30!" style="margin:7px 0 16px;border:1.5px solid var(--line);border-radius:16px;padding:0 14px;height:52px;font:500 15px 'Onest';color:var(--text);background:var(--card);outline:none" />
+<label style="font:600 12px 'Onest';color:var(--muted)">{{ t.fDate }}</label>
+<div style="margin:7px 0 16px;border:1.5px solid var(--line);border-radius:16px;padding:0 14px;height:52px;display:flex;align-items:center;font:500 15px 'Onest';color:var(--text);background:var(--card)">15 августа 2026</div>
+<button class="tapc" onClick="{{ createEv }}" style="margin-top:auto;width:100%;border:none;height:54px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 16px 'Onest'">{{ t.create2 }}</button>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOwner }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="padding-bottom:96px">
+<div style="position:relative;height:170px;background:repeating-linear-gradient(135deg,rgba(0,0,0,.04) 0 10px,transparent 10px 20px),#f6ddd0;display:flex;flex-direction:column;justify-content:space-between;padding:14px 18px 16px">
+<div class="tapc" onClick="{{ goLists }}" style="width:40px;height:40px;border-radius:100px;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:var(--text)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+<div><span style="font:700 10px 'Onest';text-transform:uppercase;letter-spacing:.05em;color:#fff;background:var(--accent);padding:5px 11px;border-radius:100px">{{ t.types.birthday }}</span>
+<h1 style="margin:9px 0 0;font:800 26px/1.02 'Onest'">Данияру — 30!</h1></div>
+</div>
+<div style="padding:16px 18px 8px">
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:16px;box-shadow:0 8px 20px -14px rgba(120,60,40,.5)">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 14px 'Onest'">{{ t.ownerClosed }}</span><span style="font:800 18px 'Onest';color:var(--accent)">8 / 15</span></div>
+<div style="margin-top:10px;height:9px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:53%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px"></div></div>
+<p style="margin:12px 0 0;font:400 12px/1.45 'Onest';color:var(--muted)">{{ t.surprise }}</p>
+</div>
+<div style="display:flex;gap:10px;margin-top:14px">
+<button class="tapc" onClick="{{ goGuest }}" style="flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--text);height:48px;border-radius:100px;font:600 13px 'Onest';display:flex;align-items:center;justify-content:center;gap:7px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M6 12v6a2 2 0 002 2h8a2 2 0 002-2v-6"/></svg>{{ t.share }}</button>
+</div>
+<h2 style="margin:22px 4px 12px;font:700 12px 'Onest';letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">{{ t.gifts }}</h2>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ ownerItems }}" as="o" hint-placeholder-count="4">
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:11px">
+<div style="width:60px;height:60px;flex:none;border-radius:14px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center"><span style="font:600 14px/1.25 'Onest'">{{ o.title }}</span><span style="font:700 13px 'Onest';color:var(--text);margin-top:4px">{{ o.price }}</span></div>
+<div style="align-self:center;color:var(--muted);font:700 18px 'Onest'">⋯</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:12px 18px 24px;background:linear-gradient(to top,var(--bg) 66%,transparent)"><button class="tapc" onClick="{{ noop }}" style="width:100%;border:none;height:52px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 15px 'Onest';display:flex;align-items:center;justify-content:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>{{ t.addGift }}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isGuest }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="padding-bottom:96px">
+<div style="position:relative;height:196px;background:repeating-linear-gradient(135deg,rgba(224,102,79,.08) 0 10px,transparent 10px 20px),#f6e6df;display:flex;flex-direction:column;justify-content:space-between;padding:14px 18px 16px">
+<div class="tapc" onClick="{{ goOwner }}" style="width:40px;height:40px;border-radius:100px;background:rgba(255,255,255,.7);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:var(--text)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></div>
+<span style="position:absolute;top:16px;right:18px;width:13px;height:13px;background:var(--accent2);transform:rotate(45deg)"></span>
+<div><span style="font:700 10px 'Onest';text-transform:uppercase;letter-spacing:.05em;color:#fff;background:var(--accent);padding:5px 11px;border-radius:100px">{{ t.types.birthday }}</span>
+<h1 style="margin:9px 0 4px;font:800 27px/1.0 'Onest'">Данияру — 30!</h1>
+<p style="margin:0;font:500 13px 'Onest';color:var(--muted)">15 августа · {{ t.gFrom }} Аяны</p></div>
+</div>
+<div style="padding:16px 16px 8px">
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:15px 17px;box-shadow:0 6px 18px -12px rgba(224,102,79,.5)">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 14px 'Onest'">{{ t.chosen }}</span><span style="font:800 15px 'Onest';color:var(--accent)">{{ chosen }} / {{ total }}</span></div>
+<div style="margin-top:10px;height:9px;border-radius:100px;background:var(--card2);overflow:hidden"><div style="width:{{ chosenPct }};height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .3s"></div></div>
+</div>
+<h2 style="margin:20px 4px 12px;font:700 12px 'Onest';letter-spacing:.06em;text-transform:uppercase;color:var(--muted)">{{ t.gifts }}</h2>
+<div style="display:flex;flex-direction:column;gap:11px">
+<sc-for list="{{ guestItems }}" as="g" hint-placeholder-count="4">
+<sc-if value="{{ g.free }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px">
+<div style="width:64px;height:64px;flex:none;border-radius:16px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2);display:flex;align-items:center;justify-content:center;font:500 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font:600 14px/1.25 'Onest'">{{ g.title }}</span><span style="font:500 11px 'Onest';color:var(--muted);margin-top:2px">{{ g.store }}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:800 14px 'Onest'">{{ g.price }}</span><button class="tapc" onClick="{{ g.onReserve }}" style="border:none;background:var(--accent);color:var(--accentText);font:700 12px 'Onest';padding:9px 16px;border-radius:100px">{{ t.reserve }}</button></div>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{ g.reserved }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px;opacity:.62">
+<div style="position:relative;width:64px;height:64px;flex:none;border-radius:16px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.08) 0 7px,transparent 7px 14px),var(--card2)"><span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 22px 'Onest';color:var(--accent)">✓</span></div>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font:600 14px/1.25 'Onest'">{{ g.title }}</span><span style="font:500 11px 'Onest';color:var(--muted);margin-top:2px">{{ g.store }}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:9px"><span style="font:800 14px 'Onest'">{{ g.price }}</span><span class="tapc" onClick="{{ g.onReserve }}" style="font:700 12px 'Onest';color:var(--muted)">{{ t.reserved }} · {{ t.cancel }}</span></div>
+</div>
+</div>
+</sc-if>
+</sc-for>
+</div>
+</div>
+<div style="position:absolute;bottom:0;left:0;right:0;padding:12px 16px 24px;background:linear-gradient(to top,var(--bg) 66%,transparent)"><button class="tapc" onClick="{{ noop }}" style="width:100%;border:none;height:52px;border-radius:100px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:var(--accentText);font:700 15px 'Onest';display:flex;align-items:center;justify-content:center;gap:8px"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M6 12v6a2 2 0 002 2h8a2 2 0 002-2v-6"/></svg>{{ t.shareList }}</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProfile }}" hint-placeholder-val="{{ false }}">
+<div class="scr fadein" style="padding:10px 20px 24px">
+<h1 style="margin:6px 0 18px;font:800 24px 'Onest'">{{ t.tabProfile }}</h1>
+<div style="display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:16px">
+<div style="width:58px;height:58px;border-radius:100px;background:repeating-linear-gradient(45deg,rgba(224,102,79,.12) 0 6px,transparent 6px 12px),var(--card2);display:flex;align-items:center;justify-content:center;font:700 8px ui-monospace,monospace;color:var(--muted)">фото</div>
+<div style="flex:1"><div style="font:700 17px 'Onest'">Аяна Смагулова</div><div style="font:500 13px 'Onest';color:var(--muted)">+7 700 123 45 67</div></div>
+<span style="font:600 13px 'Onest';color:var(--accent)">{{ t.editP }}</span>
+</div>
+<div style="display:flex;gap:12px;margin:14px 0">
+<div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 16px"><div style="font:800 24px 'Onest';color:var(--accent)">3</div><div style="font:500 12px 'Onest';color:var(--muted);margin-top:2px">{{ t.pMyEvents }}</div></div>
+<div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 16px"><div style="font:800 24px 'Onest';color:var(--accent)">2</div><div style="font:500 12px 'Onest';color:var(--muted);margin-top:2px">{{ t.pReserved }}</div></div>
+</div>
+<div style="font:700 12px 'Onest';letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:8px 4px 10px">{{ t.language }}</div>
+<div style="display:flex;gap:8px;margin-bottom:18px">
+<sc-for list="{{ langButtons }}" as="l" hint-placeholder-count="3"><div class="tapc" onClick="{{ l.onSelect }}" style="flex:1;text-align:center;padding:13px;border-radius:16px;font:700 13px 'Onest';border:1.5px solid {{ l.bd }};background:{{ l.bg }};color:{{ l.fg }}">{{ l.label }}</div></sc-for>
+</div>
+<div style="background:var(--card);border:1px solid var(--line);border-radius:var(--rad);overflow:hidden">
+<sc-for list="{{ settingRows }}" as="s" hint-placeholder-count="3"><div class="tapc" onClick="{{ noop }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 16px;border-bottom:{{ s.bb }}"><span style="font:500 14px 'Onest';color:{{ s.color }}">{{ s.label }}</span><span style="color:var(--muted)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div></sc-for>
+</div>
+</div>
+</sc-if>
+
+</div>
+
+<sc-if value="{{ showTab }}" hint-placeholder-val="{{ false }}">
+<div style="flex:none;height:64px;border-top:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(12px);display:flex;padding:6px 24px 0">
+<div class="tapc" onClick="{{ goLists }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ tabListsColor }}"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1.3"/><circle cx="3.5" cy="12" r="1.3"/><circle cx="3.5" cy="18" r="1.3"/></svg><span style="font:600 10px 'Onest'">{{ t.tabLists }}</span></div>
+<div class="tapc" onClick="{{ goWizard }}" style="flex:none;width:56px;display:flex;justify-content:center"><div style="width:50px;height:50px;margin-top:-14px;border-radius:100px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 18px -6px rgba(224,102,79,.7)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div></div>
+<div class="tapc" onClick="{{ goProfile }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ tabProfileColor }}"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg><span style="font:600 10px 'Onest'">{{ t.tabProfile }}</span></div>
+</div>
+</sc-if>
+
+<div style="position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:120px;height:5px;border-radius:3px;background:rgba(58,42,40,.28);z-index:40"></div>
+</div>
+</div></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:880}}">
+class Component extends DCLogic {
+  state = {
+    screen: 'onboarding', lang: 'ru', obStep: 0,
+    authStep: 'phone', phone: '', evTitle: '',
+    seg: 'mine', wizStep: 0, wizType: 'birthday',
+    res: { 2: true, 4: true }, tab: 'lists'
+  };
+
+  tr = {
+    ru: { skip:'Пропустить', next:'Далее', start:'Начать', continue:'Продолжить',
+      ob:[{t:'Дарите то, что ждут',d:'Alaik — тёплый список желаний к любому событию. Без дублей и неловких подарков.'},{t:'Поделитесь ссылкой',d:'Отправьте список близким одним касанием — регистрация им не нужна.'},{t:'Сюрприз под защитой',d:'Гости бронируют подарки, а вы видите только процент закрытых позиций.'}],
+      authTitle:'Вход в Alaik', authSub:'Введите номер телефона — пришлём код подтверждения', phone:'Номер телефона', otpTitle:'Введите код', otpSub:'Мы отправили 4-значный код на', resend:'Отправить снова', confirm:'Подтвердить',
+      hi:'Привет, Аяна', segMine:'Мои', segReserved:'Где бронировал', tabLists:'Списки', tabProfile:'Профиль',
+      wizTitle:'Новое событие', wizType:'Выберите тип события', fTitle:'Название', fDate:'Дата', create2:'Создать список',
+      ownerClosed:'Закрыто позиций', surprise:'Кто именно забронировал — скрыто. Сюрприз останется сюрпризом.', addGift:'Добавить подарок', share:'Поделиться', gifts:'Подарки',
+      gFrom:'Список от', reserve:'Забронировать', reserved:'Забронировано', cancel:'отменить', chosen:'Выбрано подарков', shareList:'Поделиться списком',
+      pMyEvents:'Мои события', pReserved:'Брони', language:'Язык', settings:'Настройки', notif:'Уведомления', help:'Помощь', logout:'Выйти', editP:'Изменить',
+      itemsW:'позиций', closedW:'закрыто', reservedByYou:'забронировано вами',
+      types:{wedding:'Свадьба',birthday:'День рождения',baby:'Рождение ребёнка',housewarming:'Новоселье'} },
+    kz: { skip:'Өткізу', next:'Әрі қарай', start:'Бастау', continue:'Жалғастыру',
+      ob:[{t:'Күтілген сыйлық сыйлаңыз',d:'Alaik — кез келген оқиғаға арналған жылы тілектер тізімі. Қайталанбай, ыңғайсыз сыйлықсыз.'},{t:'Сілтемемен бөлісіңіз',d:'Тізімді жақындарыңызға бір рет түртіп жіберіңіз — оларға тіркелу қажет емес.'},{t:'Тосынсый қорғауда',d:'Қонақтар сыйлық брондайды, ал сіз тек жабылған позиция пайызын көресіз.'}],
+      authTitle:'Alaik-ке кіру', authSub:'Телефон нөміріңізді енгізіңіз — растау кодын жібереміз', phone:'Телефон нөмірі', otpTitle:'Кодты енгізіңіз', otpSub:'Біз 4 таңбалы кодты жібердік', resend:'Қайта жіберу', confirm:'Растау',
+      hi:'Сәлем, Аяна', segMine:'Менің', segReserved:'Брондағаным', tabLists:'Тізімдер', tabProfile:'Профиль',
+      wizTitle:'Жаңа оқиға', wizType:'Оқиға түрін таңдаңыз', fTitle:'Атауы', fDate:'Күні', create2:'Тізім құру',
+      ownerClosed:'Жабылған позициялар', surprise:'Кім брондағаны жасырын. Тосынсый сол қалпында қалады.', addGift:'Сыйлық қосу', share:'Бөлісу', gifts:'Сыйлықтар',
+      gFrom:'Тізім иесі', reserve:'Брондау', reserved:'Броньдалған', cancel:'болдырмау', chosen:'Таңдалған сыйлықтар', shareList:'Тізіммен бөлісу',
+      pMyEvents:'Оқиғаларым', pReserved:'Брондар', language:'Тіл', settings:'Баптаулар', notif:'Хабарламалар', help:'Көмек', logout:'Шығу', editP:'Өңдеу',
+      itemsW:'позиция', closedW:'жабылды', reservedByYou:'сіз брондадыңыз',
+      types:{wedding:'Той',birthday:'Туған күн',baby:'Бөбек тойы',housewarming:'Үй той'} },
+    en: { skip:'Skip', next:'Next', start:'Get started', continue:'Continue',
+      ob:[{t:'Give what they truly want',d:'Alaik is a warm wishlist for any celebration. No duplicates, no awkward gifts.'},{t:'Share a single link',d:'Send the list to friends and family in one tap — no sign-up needed for them.'},{t:'The surprise stays safe',d:'Guests reserve gifts while you only see the percentage of items covered.'}],
+      authTitle:'Sign in to Alaik', authSub:"Enter your phone number — we'll text you a code", phone:'Phone number', otpTitle:'Enter the code', otpSub:'We sent a 4-digit code to', resend:'Resend code', confirm:'Confirm',
+      hi:'Hi, Ayana', segMine:'Mine', segReserved:'Reserved', tabLists:'Lists', tabProfile:'Profile',
+      wizTitle:'New event', wizType:'Choose event type', fTitle:'Title', fDate:'Date', create2:'Create list',
+      ownerClosed:'Items covered', surprise:'Who reserved what stays hidden. The surprise remains a surprise.', addGift:'Add gift', share:'Share', gifts:'Gifts',
+      gFrom:'List by', reserve:'Reserve', reserved:'Reserved', cancel:'cancel', chosen:'Gifts chosen', shareList:'Share list',
+      pMyEvents:'My events', pReserved:'Reserved', language:'Language', settings:'Settings', notif:'Notifications', help:'Help', logout:'Log out', editP:'Edit',
+      itemsW:'items', closedW:'covered', reservedByYou:'reserved by you',
+      types:{wedding:'Wedding',birthday:'Birthday',baby:'Baby shower',housewarming:'Housewarming'} }
+  };
+
+  tints = { wedding:'#efd9d2', birthday:'#f6ddd0', baby:'#f2e7d3', housewarming:'#ecdccb' };
+
+  baseGuest = [
+    {id:1,title:'Наушники Sony WH-1000XM5',store:'meloman.kz',price:'149 900 ₸'},
+    {id:2,title:"Кофемашина De'Longhi",store:'technodom.kz',price:'89 000 ₸'},
+    {id:3,title:'Книга «Атлас мира»',store:'meloman.kz',price:'12 500 ₸'},
+    {id:4,title:'Сертификат в СПА',store:'spa-almaty.kz',price:'30 000 ₸'},
+    {id:5,title:'Умная колонка Яндекс',store:'technodom.kz',price:'45 000 ₸'}
+  ];
+
+  go(s){ this.setState({ screen:s }); }
+  set(k,v){ this.setState({ [k]:v }); }
+
+  renderVals(){
+    const t = this.tr[this.state.lang];
+    const s = this.state.screen;
+    const AC='var(--accent)', MU='var(--muted)';
+
+    const res = this.state.res;
+    const guestItems = this.baseGuest.map(g=>({
+      ...g, free: !res[g.id], reserved: !!res[g.id],
+      onReserve: ()=> this.setState(st=>({ res:{...st.res, [g.id]: !st.res[g.id]} }))
+    }));
+    const chosen = guestItems.filter(g=>g.reserved).length;
+    const total = guestItems.length;
+
+    const mine = [
+      {id:'e1',type:'birthday',title:'Данияру — 30!',date:'15 авг',closed:8,items:15},
+      {id:'e2',type:'wedding',title:'Свадьба Айгерим и Данияра',date:'2 сен',closed:19,items:24},
+      {id:'e3',type:'housewarming',title:'Новоселье на Абая',date:'10 окт',closed:2,items:9}
+    ];
+    const reserved = [
+      {id:'r1',type:'wedding',title:'Свадьба Медета и Динары',date:'5 авг',mine:1},
+      {id:'r2',type:'baby',title:'Baby shower · Алия',date:'20 авг',mine:2}
+    ];
+    const mkEvent = (e,isMine)=>({
+      typeLabel:t.types[e.type], title:e.title, date:e.date, tint:this.tints[e.type],
+      pct: isMine ? Math.round(e.closed/e.items*100)+'%' : '100%',
+      sub: isMine ? (e.closed+' '+t.itemsW+' '+t.closedW+' · '+e.items) : (e.mine+' '+t.reservedByYou),
+      onOpen: ()=> this.go('owner')
+    });
+    const shownEvents = this.state.seg==='mine' ? mine.map(e=>mkEvent(e,true)) : reserved.map(e=>mkEvent(e,false));
+
+    const seg = this.state.seg;
+    const active = { bg:'var(--card)', fg:'var(--text)', sh:'0 2px 6px rgba(120,60,40,.12)' };
+    const idle = { bg:'transparent', fg:MU, sh:'none' };
+
+    const wt = this.state.wizType;
+    const wizTypes = ['wedding','birthday','baby','housewarming'].map(k=>({
+      label:t.types[k], tint:this.tints[k], bd: wt===k?AC:'transparent',
+      onSelect: ()=> this.set('wizType',k)
+    }));
+
+    const langButtons = [['ru','RU'],['kz','KZ'],['en','EN']].map(([c,l])=>({
+      label:l, bg: this.state.lang===c?AC:'var(--card)', fg: this.state.lang===c?'#fff':'var(--text)',
+      bd: this.state.lang===c?AC:'var(--line)', onSelect: ()=> this.set('lang',c)
+    }));
+
+    const settingRows = [
+      {label:t.notif}, {label:t.settings}, {label:t.help}, {label:t.logout, danger:true}
+    ].map((r,i,arr)=>({ label:r.label, color: r.danger?AC:'var(--text)', bb: i<arr.length-1?'1px solid var(--line)':'none' }));
+
+    const obDots = [0,1,2].map(i=>({ w: i===this.state.obStep?'22px':'7px', bg: i===this.state.obStep?AC:'var(--card2)' }));
+    const obLast = this.state.obStep>=2;
+
+    const langLabels = { ru:'RU', kz:'KZ', en:'EN' };
+    const otp = ['5','3','9','1'];
+    const otpBoxes = otp.map(v=>({ v, bd: 'var(--accent)' }));
+
+    return {
+      t, langLabel: langLabels[this.state.lang],
+      cycleLang: ()=>{ const o=['ru','kz','en']; this.set('lang', o[(o.indexOf(this.state.lang)+1)%3]); },
+      // screen flags
+      isOb: s==='onboarding', isAuth: s==='auth', isLists: s==='lists',
+      isWizard: s==='wizard', isOwner: s==='owner', isGuest: s==='guest', isProfile: s==='profile',
+      showTab: s==='lists' || s==='profile',
+      tabListsColor: s==='lists'?AC:MU, tabProfileColor: s==='profile'?AC:MU,
+      // nav
+      goAuth: ()=>this.go('auth'), goLists: ()=>this.go('lists'), goWizard: ()=>this.setState({screen:'wizard',wizStep:0}),
+      goOwner: ()=>this.go('owner'), goGuest: ()=>this.go('guest'), goProfile: ()=>this.go('profile'),
+      noop: ()=>{},
+      // onboarding
+      obArt:'иллюстрация', obTitle: t.ob[this.state.obStep].t, obText: t.ob[this.state.obStep].d,
+      obDots, obBtn: obLast?t.start:t.next,
+      obNext: ()=>{ if(obLast) this.go('auth'); else this.set('obStep', this.state.obStep+1); },
+      // auth
+      authPhone: this.state.authStep==='phone', authOtp: this.state.authStep==='otp',
+      phone: this.state.phone, setPhone: (e)=>this.set('phone', e.target.value),
+      authBack: ()=>{ if(this.state.authStep==='otp') this.set('authStep','phone'); else this.go('onboarding'); },
+      toOtp: ()=>this.set('authStep','otp'), confirmOtp: ()=>this.go('lists'), otpBoxes,
+      // lists
+      segMine: ()=>this.set('seg','mine'), segRes: ()=>this.set('seg','reserved'),
+      segMineBg: seg==='mine'?active.bg:idle.bg, segMineFg: seg==='mine'?active.fg:idle.fg, segMineSh: seg==='mine'?active.sh:idle.sh,
+      segResBg: seg==='reserved'?active.bg:idle.bg, segResFg: seg==='reserved'?active.fg:idle.fg, segResSh: seg==='reserved'?active.sh:idle.sh,
+      shownEvents,
+      // wizard
+      wizTypeStep: this.state.wizStep===0, wizDetailStep: this.state.wizStep===1,
+      wizStep2Bg: this.state.wizStep===1?AC:'var(--card2)', wizTypes,
+      wizPickTint: this.tints[wt], wizPickLabel: t.types[wt],
+      wizBack: ()=>{ if(this.state.wizStep===1) this.set('wizStep',0); else this.go('lists'); },
+      wizNext: ()=>this.set('wizStep',1),
+      evTitle: this.state.evTitle, setTitle:(e)=>this.set('evTitle',e.target.value),
+      createEv: ()=>this.go('owner'),
+      // owner
+      ownerItems: this.baseGuest.slice(0,4),
+      // guest
+      guestItems, chosen, total, chosenPct: Math.round(chosen/total*100)+'%',
+      // profile
+      langButtons, settingRows
+    };
+  }
+}
+</script>
+</body>
+</html>
