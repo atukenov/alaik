@@ -16,7 +16,6 @@ builder.Services.AddControllers().AddJsonOptions(o =>
     // Serialize enums as strings ("Wedding") so the frontend deals in readable values.
     o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
-builder.Services.AddOpenApi();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -72,11 +71,6 @@ using (var scope = app.Services.CreateScope())
         db,
         scope.ServiceProvider.GetRequiredService<ISlugGenerator>(),
         scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>());
-}
-
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
 }
 
 app.UseCors(CorsPolicy);
