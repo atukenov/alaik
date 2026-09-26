@@ -10,5 +10,10 @@ public class User
     public string? AvatarUrl { get; set; }
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
+    // Alaik Plus subscription: premium while this is in the future (null/past = free tier).
+    public DateTimeOffset? PremiumUntil { get; set; }
+
+    public bool IsPremium => PremiumUntil.HasValue && PremiumUntil.Value > DateTimeOffset.UtcNow;
+
     public ICollection<Event> Events { get; set; } = new List<Event>();
 }

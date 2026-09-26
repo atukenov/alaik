@@ -11,6 +11,8 @@ export interface User {
   email: string;
   phone: string | null;
   avatarUrl: string | null;
+  isPremium: boolean;
+  premiumUntil: string | null;
 }
 
 export interface AppNotification {

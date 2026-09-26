@@ -7,7 +7,9 @@ public record RegisterDto(string Name, string Email, string Password);
 public record LoginDto(string Email, string Password);
 public record RefreshDto(string RefreshToken);
 public record AuthResponse(string AccessToken, string RefreshToken, UserDto User);
-public record UserDto(Guid Id, string Name, string Email, string? Phone, string? AvatarUrl);
+public record UserDto(
+    Guid Id, string Name, string Email, string? Phone, string? AvatarUrl,
+    bool IsPremium, DateTimeOffset? PremiumUntil);
 
 // ---- Notifications ----
 public record NotificationDto(

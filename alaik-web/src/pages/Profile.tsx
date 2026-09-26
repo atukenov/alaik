@@ -72,6 +72,24 @@ export default function Profile() {
           <Stat value={reserved.length} label={t.pReserved} />
         </div>
 
+        <button
+          onClick={() => nav('/plus')}
+          className="tapc mb-4 flex w-full items-center gap-3 rounded-card bg-primary-135 p-4 text-left text-white"
+        >
+          <span className="text-2xl">✨</span>
+          <div className="min-w-0 flex-1">
+            <div className="text-[15px] font-extrabold">Alaik Plus</div>
+            <div className="truncate text-[12px] text-white/85">
+              {user?.isPremium ? t.plusActive : t.plusTagline}
+            </div>
+          </div>
+          {!user?.isPremium && (
+            <span className="flex-none rounded-pill bg-white/20 px-3 py-1.5 text-[12px] font-bold">
+              {t.plusCta}
+            </span>
+          )}
+        </button>
+
         <div className="section-label mx-1 mb-2.5 mt-2">{t.language}</div>
         <div className="mb-[18px] flex gap-2">
           {LANGS.map(([code, label]) => {

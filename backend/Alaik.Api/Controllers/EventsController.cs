@@ -1,4 +1,5 @@
 using Alaik.Api.Dtos;
+using Alaik.Domain;
 using Alaik.Domain.Entities;
 using Alaik.Domain.Enums;
 using Alaik.Infrastructure.Auth;
@@ -58,6 +59,16 @@ public class EventsController(AlaikDbContext db, ISlugGenerator slugs) : Control
         if (userId is null) return Unauthorized();
         if (string.IsNullOrWhiteSpace(dto.Title))
             return BadRequest(new { error = "title_required" });
+
+        // Free tier: cap the number of events. Premium (Alaik Plus) removes the cap.
+        var user = await db.Users.FindAsync(userId);
+        if (user is not null && !user.IsPremium)
+        {
+            var eventCount = await db.Events.CountAsync(e => e.OwnerId == userId);
+            if (eventCount >= PlanLimits.FreeMaxEvents)
+                return StatusCode(StatusCodes.Status402PaymentRequired,
+                    new { error = "free_limit_events", limit = PlanLimits.FreeMaxEvents });
+        }
 
         var ev = new Event
         {
@@ -123,6 +134,16 @@ public class EventsController(AlaikDbContext db, ISlugGenerator slugs) : Control
         if (ev is null) return NotFound();
         if (string.IsNullOrWhiteSpace(dto.Title))
             return BadRequest(new { error = "title_required" });
+
+        // Free tier: cap gifts per event. Premium (Alaik Plus) removes the cap.
+        var user = await db.Users.FindAsync(userId);
+        if (user is not null && !user.IsPremium)
+        {
+            var giftCount = await db.WishlistItems.CountAsync(i => i.EventId == ev.Id);
+            if (giftCount >= PlanLimits.FreeMaxGiftsPerEvent)
+                return StatusCode(StatusCodes.Status402PaymentRequired,
+                    new { error = "free_limit_gifts", limit = PlanLimits.FreeMaxGiftsPerEvent });
+        }
 
         db.WishlistItems.Add(new WishlistItem
         {

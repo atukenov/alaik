@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api } from '../lib/api';
+import { api, ApiError } from '../lib/api';
 import { useT, typeLabel } from '../lib/i18n';
 import { coverStyle, formatPrice } from '../lib/format';
 import { AppShell } from '../components/AppShell';
@@ -181,6 +181,7 @@ function ItemModal({
 }) {
   const t = useT();
   const qc = useQueryClient();
+  const nav = useNavigate();
   const [title, setTitle] = useState(item?.title ?? '');
   const [store, setStore] = useState(item?.store ?? '');
   const [price, setPrice] = useState(item?.price != null ? String(item.price) : '');
@@ -235,6 +236,13 @@ function ItemModal({
     onSuccess: () => {
       invalidate();
       onClose();
+    },
+    onError: (err) => {
+      if (err instanceof ApiError && err.status === 402) {
+        const code = (err.body as { error?: string } | null)?.error ?? 'free_limit_gifts';
+        onClose();
+        nav(`/plus?reason=${code}`);
+      }
     },
   });
 

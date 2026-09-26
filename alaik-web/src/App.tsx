@@ -9,6 +9,7 @@ import Wizard from './pages/Wizard';
 import Owner from './pages/Owner';
 import Guest from './pages/Guest';
 import Profile from './pages/Profile';
+import Plus from './pages/Plus';
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const authed = useAuth((s) => !!s.accessToken);
@@ -35,6 +36,7 @@ export default function App() {
       <Route path="/create" element={<RequireAuth><Wizard /></RequireAuth>} />
       <Route path="/event/:id" element={<RequireAuth><Owner /></RequireAuth>} />
       <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+      <Route path="/plus" element={<RequireAuth><Plus /></RequireAuth>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

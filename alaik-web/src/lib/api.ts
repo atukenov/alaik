@@ -98,6 +98,18 @@ export const api = {
   me: () => request<User>('/api/auth/me', { auth: true }),
   deleteAccount: () => request<void>('/api/auth/me', { method: 'DELETE', auth: true }),
 
+  // ---- billing (dev toggles stand in for real StoreKit/RevenueCat purchases) ----
+  devUpgrade: () =>
+    request<{ isPremium: boolean; premiumUntil: string | null }>('/api/billing/dev-upgrade', {
+      method: 'POST',
+      auth: true,
+    }),
+  devDowngrade: () =>
+    request<{ isPremium: boolean; premiumUntil: string | null }>('/api/billing/dev-downgrade', {
+      method: 'POST',
+      auth: true,
+    }),
+
   // ---- notifications ----
   getNotifications: () =>
     request<AppNotification[]>('/api/notifications', { auth: true }),

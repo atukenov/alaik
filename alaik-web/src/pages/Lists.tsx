@@ -9,6 +9,7 @@ import { coverStyle, formatDate } from '../lib/format';
 import { AppShell } from '../components/AppShell';
 import { ProgressBar, TypeChip, Placeholder } from '../components/ui';
 import { BellIcon } from '../components/Icons';
+import { AdBanner } from '../components/AdBanner';
 import type { EventSummary } from '../lib/types';
 
 export default function Lists() {
@@ -96,6 +97,8 @@ export default function Lists() {
             ))}
           </div>
         )}
+
+        <AdBanner />
       </div>
 
       {showNotifs && (

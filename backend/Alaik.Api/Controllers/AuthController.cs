@@ -128,7 +128,7 @@ public class AuthController(
     }
 
     private static UserDto ToDto(User u) =>
-        new(u.Id, u.Name, u.Email, u.Phone, u.AvatarUrl);
+        new(u.Id, u.Name, u.Email, u.Phone, u.AvatarUrl, u.IsPremium, u.PremiumUntil);
 
     private static string NormalizeEmail(string email) =>
         (email ?? string.Empty).Trim().ToLowerInvariant();

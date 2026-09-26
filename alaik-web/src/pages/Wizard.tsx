@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../lib/api';
+import { api, ApiError } from '../lib/api';
 import { useT, typeLabel } from '../lib/i18n';
 import { coverStyle } from '../lib/format';
 import { AppShell } from '../components/AppShell';
@@ -26,6 +26,12 @@ export default function Wizard() {
     onSuccess: (ev) => {
       qc.invalidateQueries({ queryKey: ['events'] });
       nav(`/event/${ev.id}`, { replace: true });
+    },
+    onError: (err) => {
+      if (err instanceof ApiError && err.status === 402) {
+        const code = (err.body as { error?: string } | null)?.error ?? 'free_limit_events';
+        nav(`/plus?reason=${code}`);
+      }
     },
   });
 
