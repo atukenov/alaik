@@ -11,6 +11,11 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// PaaS hosts (Railway, Render, …) assign the listening port via $PORT.
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(port))
+    builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 builder.Services.AddControllers().AddJsonOptions(o =>
 {
     // Serialize enums as strings ("Wedding") so the frontend deals in readable values.
@@ -49,16 +54,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 const string CorsPolicy = "AlaikCors";
+// Vite dev server + Capacitor WebView origins, plus any extra production web
+// origins from config (Cors__Origins="https://app.example.com,https://…").
+string[] defaultOrigins =
+[
+    "http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:4173",
+    "capacitor://localhost", "ionic://localhost", "http://localhost",
+];
+var extraOrigins = builder.Configuration["Cors:Origins"]
+    ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? [];
 builder.Services.AddCors(o => o.AddPolicy(CorsPolicy, p =>
-{
-    // Vite dev server + Capacitor WebView origins.
-    p.WithOrigins(
-        "http://localhost:5173", "http://127.0.0.1:5173",
-        "http://localhost:4173",
-        "capacitor://localhost", "ionic://localhost", "http://localhost")
+    p.WithOrigins([.. defaultOrigins, .. extraOrigins])
      .AllowAnyHeader()
-     .AllowAnyMethod();
-}));
+     .AllowAnyMethod()));
 
 var app = builder.Build();
 

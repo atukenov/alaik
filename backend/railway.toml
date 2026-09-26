@@ -1,0 +1,19 @@
+# Railway service config for the Alaik API.
+#
+# In the Railway service settings, set **Root Directory = backend** so this file
+# and the Dockerfile build context resolve correctly. Then Railway builds the
+# image from backend/Alaik.Api/Dockerfile with backend/ as the context.
+#
+# Required service variables (Railway → Variables):
+#   Jwt__Key      a strong secret, 32+ characters
+#   DATABASE_URL  auto-injected when you attach a Railway Postgres plugin
+# Optional:
+#   Cors__Origins comma-separated production web origins, if you also host the web app
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Alaik.Api/Dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 5

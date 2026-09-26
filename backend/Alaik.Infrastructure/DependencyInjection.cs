@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace Alaik.Infrastructure;
 
@@ -15,10 +16,7 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services, IConfiguration config)
     {
-        var connectionString = config.GetConnectionString("Default")
-            ?? "Host=localhost;Port=5442;Database=alaik;Username=alaik;Password=alaik";
-
-        services.AddDbContext<AlaikDbContext>(o => o.UseNpgsql(connectionString));
+        services.AddDbContext<AlaikDbContext>(o => o.UseNpgsql(ResolveConnectionString(config)));
 
         services.Configure<JwtOptions>(config.GetSection(JwtOptions.SectionName));
         services.AddScoped<ITokenService, TokenService>();
@@ -41,5 +39,32 @@ public static class DependencyInjection
         });
 
         return services;
+    }
+
+    // Prefer a managed-host DATABASE_URL (Railway/Render/Heroku style
+    // "postgres://user:pass@host:port/db"); fall back to ConnectionStrings:Default,
+    // then a local-dev default.
+    private static string ResolveConnectionString(IConfiguration config)
+    {
+        var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+        if (!string.IsNullOrWhiteSpace(databaseUrl) &&
+            Uri.TryCreate(databaseUrl, UriKind.Absolute, out var uri) &&
+            (uri.Scheme == "postgres" || uri.Scheme == "postgresql"))
+        {
+            var userInfo = uri.UserInfo.Split(':', 2);
+            var builder = new NpgsqlConnectionStringBuilder
+            {
+                Host = uri.Host,
+                Port = uri.Port > 0 ? uri.Port : 5432,
+                Username = Uri.UnescapeDataString(userInfo[0]),
+                Password = userInfo.Length > 1 ? Uri.UnescapeDataString(userInfo[1]) : string.Empty,
+                Database = uri.AbsolutePath.TrimStart('/'),
+                SslMode = SslMode.Prefer,
+            };
+            return builder.ConnectionString;
+        }
+
+        return config.GetConnectionString("Default")
+            ?? "Host=localhost;Port=5442;Database=alaik;Username=alaik;Password=alaik";
     }
 }

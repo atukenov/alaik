@@ -1,5 +1,7 @@
 # Alaik
 
+![CI](https://github.com/atukenov/alaik/actions/workflows/ci.yml/badge.svg)
+
 Wishlist app for events (weddings, birthdays, baby showers, housewarmings). An owner
 creates a gift list; guests open a public link and *reserve* gifts to avoid duplicates.
 The owner only ever sees how many items are covered — **never who reserved what**, so the
@@ -77,36 +79,47 @@ npx cap open ios          # opens Xcode → set signing team, then Run/Archive
 The API's CORS policy already allows the Capacitor WebView origins
 (`capacitor://localhost`, `http://localhost`).
 
-## Production
+## Deploy
 
-**API** — build the container from the `backend/` directory and provide secrets via env:
+### API → Railway
 
-```bash
-cd backend
-docker build -f Alaik.Api/Dockerfile -t alaik-api .
-docker run -p 8080:8080 \
-  -e ConnectionStrings__Default="Host=<db>;Port=5432;Database=alaik;Username=<u>;Password=<p>" \
-  -e Jwt__Key="<a strong secret, at least 32 characters>" \
-  alaik-api
-```
+The backend is Railway-ready: it binds to `$PORT` and parses Railway's `DATABASE_URL`.
 
-The API refuses to start in `Production` if `Jwt__Key` is missing, too short, or the
-checked-in dev placeholder. Migrations apply automatically on startup.
+1. Create a Railway project → **New → Deploy from GitHub repo** → select `atukenov/alaik`.
+2. In the service **Settings**, set **Root Directory = `backend`**. Railway picks up
+   [`backend/railway.toml`](backend/railway.toml) and builds
+   [`Alaik.Api/Dockerfile`](backend/Alaik.Api/Dockerfile).
+3. Add a **Postgres** plugin (New → Database → PostgreSQL) and attach it to the service —
+   this injects `DATABASE_URL` automatically. For a Kazakhstan audience, pick a
+   region/provider that keeps data in-country.
+4. Add a service variable **`Jwt__Key`** = a strong secret (32+ chars). Optional
+   **`Cors__Origins`** = your web origin(s) if you also host the web build.
+5. Deploy. Migrations apply automatically on startup. Note the public URL
+   (e.g. `https://alaik-api.up.railway.app`).
 
-**Frontend / iOS** — point the build at the hosted API and package with Capacitor:
+> Runs anywhere else the same way: build `backend/Alaik.Api/Dockerfile`, then supply
+> either `DATABASE_URL` or `ConnectionStrings__Default`, plus `Jwt__Key`. The API refuses
+> to start in `Production` if `Jwt__Key` is missing, too short, or the dev placeholder.
+
+### Frontend / iOS → App Store
+
+Point the build at the live API and package with Capacitor:
 
 ```bash
 cd alaik-web
-echo "VITE_API_URL=https://your-api.example.com" > .env.production
+echo "VITE_API_URL=https://<your-railway-url>" > .env.production
 npm run build && npx cap sync ios && npx cap open ios
 ```
 
+In Xcode: set your signing Team → Archive → upload to App Store Connect. Listing copy and
+the review checklist are in [`docs/APP_STORE.md`](docs/APP_STORE.md).
+
 ### Before the App Store
-- Personal data (email) → add a **privacy policy** and Apple **App Privacy** labels.
+- Host [`docs/PRIVACY.md`](docs/PRIVACY.md) at a public URL and enter it in App Store Connect.
+- Fill the **App Privacy** labels (guidance in [`docs/APP_STORE.md`](docs/APP_STORE.md)).
 - **Account deletion** is built (Profile → «Удалить аккаунт»), satisfying Apple's requirement.
-- Add **push notifications** (APNs) — the owner threshold notifications are stored server-side
-  and shown in-app today; wiring APNs on top is the natural next step.
-- KZ data-localization: store user data on servers located in Kazakhstan.
+- Optional next step: **push notifications** (APNs) — owner threshold notifications are
+  stored server-side and shown in-app today; APNs layers on top of the same records.
 
 ## Features of note
 
