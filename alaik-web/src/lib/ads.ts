@@ -24,16 +24,24 @@ function interstitialId(): string {
   return real || (isIos() ? TEST_INTERSTITIAL_IOS : TEST_INTERSTITIAL_ANDROID);
 }
 
-// True while we're serving Google's test units (no real ids configured yet).
-function usingTestAds(): boolean {
-  return !(isIos() ? import.meta.env.VITE_ADMOB_IOS_BANNER : import.meta.env.VITE_ADMOB_ANDROID_BANNER);
+// Serve test ads when explicitly requested (VITE_ADS_TEST=true — use this on the
+// Simulator / test devices so you never risk your AdMob account), or when no real
+// ad unit ids are configured at all. Set VITE_ADS_TEST=false for production builds.
+function testMode(): boolean {
+  if ((import.meta.env.VITE_ADS_TEST as string | undefined) === 'true') return true;
+  const anyReal =
+    import.meta.env.VITE_ADMOB_IOS_BANNER ||
+    import.meta.env.VITE_ADMOB_IOS_INTERSTITIAL ||
+    import.meta.env.VITE_ADMOB_ANDROID_BANNER ||
+    import.meta.env.VITE_ADMOB_ANDROID_INTERSTITIAL;
+  return !anyReal;
 }
 
 /** Initialize AdMob once on native at startup (also prompts ATT on iOS). */
 export async function initAds(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
   const { AdMob } = await import('@capacitor-community/admob');
-  await AdMob.initialize({ initializeForTesting: usingTestAds() });
+  await AdMob.initialize({ initializeForTesting: testMode() });
 }
 
 export async function showBanner(): Promise<void> {
@@ -44,7 +52,7 @@ export async function showBanner(): Promise<void> {
     adSize: BannerAdSize.ADAPTIVE_BANNER,
     position: BannerAdPosition.BOTTOM_CENTER,
     margin: 0,
-    isTesting: usingTestAds(),
+    isTesting: testMode(),
   }).catch(() => {});
 }
 
@@ -78,7 +86,7 @@ export async function maybeShowInterstitial(isPremium: boolean): Promise<void> {
   if (isPremium || !Capacitor.isNativePlatform() || withinCap()) return;
   try {
     const { AdMob } = await import('@capacitor-community/admob');
-    await AdMob.prepareInterstitial({ adId: interstitialId(), isTesting: usingTestAds() });
+    await AdMob.prepareInterstitial({ adId: interstitialId(), isTesting: testMode() });
     await AdMob.showInterstitial();
     try {
       localStorage.setItem(LAST_KEY, String(Date.now()));
