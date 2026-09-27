@@ -4,6 +4,7 @@ import { useAuth } from './store/auth';
 import { useUi } from './store/ui';
 import { hideBanner } from './lib/ads';
 import { isWeb } from './lib/platform';
+import { useDeepLinks } from './lib/deeplinks';
 import Onboarding from './pages/Onboarding';
 import Auth from './pages/Auth';
 import Lists from './pages/Lists';
@@ -41,6 +42,8 @@ function WebApp() {
 }
 
 function NativeApp() {
+  // Send Universal Links (e.g. a shared /e/:slug guest link) into the router.
+  useDeepLinks();
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
