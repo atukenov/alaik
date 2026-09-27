@@ -5,14 +5,17 @@ export type EventType =
   | 'Housewarming'
   | 'Custom';
 
+export type Tier = 'Free' | 'Plus' | 'Max';
+
 export interface User {
   id: string;
   name: string;
   email: string;
   phone: string | null;
   avatarUrl: string | null;
+  tier: Tier;
   isPremium: boolean;
-  premiumUntil: string | null;
+  subscriptionUntil: string | null;
 }
 
 export interface AppNotification {

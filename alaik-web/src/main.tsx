@@ -4,12 +4,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App.tsx';
+import { initBilling } from './lib/billing';
+import { initAds } from './lib/ads';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: { retry: 1, refetchOnWindowFocus: false, staleTime: 10_000 },
   },
 });
+
+// Native SDK setup (no-ops on the web).
+void initBilling();
+void initAds();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

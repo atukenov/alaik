@@ -78,7 +78,9 @@ export default function Profile() {
         >
           <span className="text-2xl">✨</span>
           <div className="min-w-0 flex-1">
-            <div className="text-[15px] font-extrabold">Alaik Plus</div>
+            <div className="text-[15px] font-extrabold">
+              {user?.isPremium ? `Alaik ${user.tier}` : 'Alaik Plus'}
+            </div>
             <div className="truncate text-[12px] text-white/85">
               {user?.isPremium ? t.plusActive : t.plusTagline}
             </div>

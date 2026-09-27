@@ -98,15 +98,12 @@ export const api = {
   me: () => request<User>('/api/auth/me', { auth: true }),
   deleteAccount: () => request<void>('/api/auth/me', { method: 'DELETE', auth: true }),
 
-  // ---- billing (dev toggles stand in for real StoreKit/RevenueCat purchases) ----
-  devUpgrade: () =>
-    request<{ isPremium: boolean; premiumUntil: string | null }>('/api/billing/dev-upgrade', {
+  // ---- billing ----
+  // Dev-only tier switch; on device this is replaced by a real RevenueCat purchase.
+  devSetTier: (tier: 'Free' | 'Plus' | 'Max') =>
+    request<{ tier: string; subscriptionUntil: string | null }>('/api/billing/dev-set-tier', {
       method: 'POST',
-      auth: true,
-    }),
-  devDowngrade: () =>
-    request<{ isPremium: boolean; premiumUntil: string | null }>('/api/billing/dev-downgrade', {
-      method: 'POST',
+      body: { tier },
       auth: true,
     }),
 

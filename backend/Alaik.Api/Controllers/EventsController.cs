@@ -60,15 +60,12 @@ public class EventsController(AlaikDbContext db, ISlugGenerator slugs) : Control
         if (string.IsNullOrWhiteSpace(dto.Title))
             return BadRequest(new { error = "title_required" });
 
-        // Free tier: cap the number of events. Premium (Alaik Plus) removes the cap.
+        // Per-tier cap on the number of events.
         var user = await db.Users.FindAsync(userId);
-        if (user is not null && !user.IsPremium)
-        {
-            var eventCount = await db.Events.CountAsync(e => e.OwnerId == userId);
-            if (eventCount >= PlanLimits.FreeMaxEvents)
-                return StatusCode(StatusCodes.Status402PaymentRequired,
-                    new { error = "free_limit_events", limit = PlanLimits.FreeMaxEvents });
-        }
+        var (maxEvents, _) = PlanLimits.For(user?.EffectiveTier ?? SubscriptionTier.Free);
+        if (await db.Events.CountAsync(e => e.OwnerId == userId) >= maxEvents)
+            return StatusCode(StatusCodes.Status402PaymentRequired,
+                new { error = "free_limit_events", limit = maxEvents, tier = user?.EffectiveTier.ToString() });
 
         var ev = new Event
         {
@@ -135,15 +132,12 @@ public class EventsController(AlaikDbContext db, ISlugGenerator slugs) : Control
         if (string.IsNullOrWhiteSpace(dto.Title))
             return BadRequest(new { error = "title_required" });
 
-        // Free tier: cap gifts per event. Premium (Alaik Plus) removes the cap.
+        // Per-tier cap on gifts per event.
         var user = await db.Users.FindAsync(userId);
-        if (user is not null && !user.IsPremium)
-        {
-            var giftCount = await db.WishlistItems.CountAsync(i => i.EventId == ev.Id);
-            if (giftCount >= PlanLimits.FreeMaxGiftsPerEvent)
-                return StatusCode(StatusCodes.Status402PaymentRequired,
-                    new { error = "free_limit_gifts", limit = PlanLimits.FreeMaxGiftsPerEvent });
-        }
+        var (_, maxGifts) = PlanLimits.For(user?.EffectiveTier ?? SubscriptionTier.Free);
+        if (await db.WishlistItems.CountAsync(i => i.EventId == ev.Id) >= maxGifts)
+            return StatusCode(StatusCodes.Status402PaymentRequired,
+                new { error = "free_limit_gifts", limit = maxGifts, tier = user?.EffectiveTier.ToString() });
 
         db.WishlistItems.Add(new WishlistItem
         {

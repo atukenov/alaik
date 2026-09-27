@@ -1,8 +1,14 @@
+using Alaik.Domain.Enums;
+
 namespace Alaik.Domain;
 
-/// <summary>Free-tier limits. Premium (Alaik Plus) removes them.</summary>
+/// <summary>Per-tier limits. Free is the most restricted; Max is unlimited.</summary>
 public static class PlanLimits
 {
-    public const int FreeMaxEvents = 3;
-    public const int FreeMaxGiftsPerEvent = 20;
+    public static (int MaxEvents, int MaxGifts) For(SubscriptionTier tier) => tier switch
+    {
+        SubscriptionTier.Max => (int.MaxValue, int.MaxValue),
+        SubscriptionTier.Plus => (3, 20),
+        _ => (1, 10), // Free
+    };
 }

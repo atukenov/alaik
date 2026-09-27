@@ -106,13 +106,21 @@ export interface Dict {
   plusB3: string;
   plusB4: string;
   plusB5: string;
-  plusPrice: string;
-  plusSubscribe: string;
   plusActive: string;
   plusNotReady: string;
   plusLegal: string;
   limitEvents: string;
   limitGifts: string;
+  premiumTitle: string;
+  planPlus: string;
+  planMax: string;
+  planPlusDesc: string;
+  planMaxDesc: string;
+  planPlusPrice: string;
+  planMaxPrice: string;
+  subscribeCta: string;
+  restoreCta: string;
+  currentTierLabel: string;
   types: Record<Exclude<EventType, 'Custom'> | 'custom', string>;
 }
 
@@ -141,8 +149,10 @@ export const tr: Record<'ru' | 'kz' | 'en', Dict> = {
     email: 'Email', deleteAccount: 'Удалить аккаунт', deleteAccountConfirm: 'Удалить аккаунт навсегда? Ваши события и подарки будут удалены. Отменить нельзя.', confirmDelete: 'Удалить', cancelBtn: 'Отмена', notifTitle: 'Уведомления', notifEmpty: 'Пока нет уведомлений',
     adLabel: 'Реклама', adRemove: 'Уберите рекламу с Alaik Plus', plusCta: 'Plus', plusRow: 'Alaik Plus',
     plusTagline: 'Больше возможностей, без рекламы', plusB1: 'Без рекламы', plusB2: 'Неограниченно событий и подарков', plusB3: 'Свои фото для обложек', plusB4: 'Совместные списки с со-организаторами', plusB5: 'Напоминания и премиум-темы',
-    plusPrice: '₸990 / мес или ₸4 990 / год', plusSubscribe: 'Оформить Alaik Plus', plusActive: 'Alaik Plus активен ✨', plusNotReady: 'Оплата ещё не подключена на этом устройстве', plusLegal: 'Оплата спишется с вашего Apple ID. Подписка продлевается автоматически, отмена — в настройках Apple ID.',
-    limitEvents: 'На бесплатном тарифе — до 3 событий. Оформите Plus для неограниченного числа.', limitGifts: 'На бесплатном тарифе — до 20 подарков в событии. Оформите Plus, чтобы снять лимит.',
+    plusActive: 'Подписка активна ✨', plusNotReady: 'Оплата ещё не подключена на этом устройстве', plusLegal: 'Оплата спишется с вашего Apple ID. Подписка продлевается автоматически, отмена — в настройках Apple ID.',
+    limitEvents: 'Лимит событий достигнут. Оформите подписку, чтобы создавать больше.', limitGifts: 'Лимит подарков достигнут. Оформите подписку, чтобы добавлять больше.',
+    premiumTitle: 'Выберите тариф', planPlus: 'Alaik Plus', planMax: 'Alaik Max', planPlusDesc: '3 события · 20 подарков в событии', planMaxDesc: 'Без ограничений на события и подарки',
+    planPlusPrice: '₸990 / мес', planMaxPrice: '₸1 990 / мес', subscribeCta: 'Оформить подписку', restoreCta: 'Восстановить покупки', currentTierLabel: 'Ваш тариф',
     types: { Wedding: 'Свадьба', Birthday: 'День рождения', BabyShower: 'Рождение ребёнка', Housewarming: 'Новоселье', custom: 'Другое' },
   },
   kz: {
@@ -169,8 +179,10 @@ export const tr: Record<'ru' | 'kz' | 'en', Dict> = {
     email: 'Email', deleteAccount: 'Аккаунтты жою', deleteAccountConfirm: 'Аккаунт біржола жойылсын ба? Оқиғалар мен сыйлықтар жойылады. Қайтару мүмкін емес.', confirmDelete: 'Жою', cancelBtn: 'Болдырмау', notifTitle: 'Хабарламалар', notifEmpty: 'Әзірге хабарлама жоқ',
     adLabel: 'Жарнама', adRemove: 'Alaik Plus-пен жарнаманы өшіріңіз', plusCta: 'Plus', plusRow: 'Alaik Plus',
     plusTagline: 'Көбірек мүмкіндік, жарнамасыз', plusB1: 'Жарнамасыз', plusB2: 'Шексіз оқиға мен сыйлық', plusB3: 'Мұқабаға өз фотоңыз', plusB4: 'Со-ұйымдастырушылармен ортақ тізім', plusB5: 'Еске салулар мен премиум тақырыптар',
-    plusPrice: '₸990 / ай немесе ₸4 990 / жыл', plusSubscribe: 'Alaik Plus рәсімдеу', plusActive: 'Alaik Plus белсенді ✨', plusNotReady: 'Бұл құрылғыда төлем әлі қосылмаған', plusLegal: 'Төлем Apple ID-ден шешіледі. Жазылым автоматты жаңарады, бас тарту — Apple ID баптауларында.',
-    limitEvents: 'Тегін тарифте — 3 оқиғаға дейін. Шексіз үшін Plus рәсімдеңіз.', limitGifts: 'Тегін тарифте — оқиғада 20 сыйлыққа дейін. Лимитті алу үшін Plus рәсімдеңіз.',
+    plusActive: 'Жазылым белсенді ✨', plusNotReady: 'Бұл құрылғыда төлем әлі қосылмаған', plusLegal: 'Төлем Apple ID-ден шешіледі. Жазылым автоматты жаңарады, бас тарту — Apple ID баптауларында.',
+    limitEvents: 'Оқиға лимиті бітті. Көбірек құру үшін жазылыңыз.', limitGifts: 'Сыйлық лимиті бітті. Көбірек қосу үшін жазылыңыз.',
+    premiumTitle: 'Тарифті таңдаңыз', planPlus: 'Alaik Plus', planMax: 'Alaik Max', planPlusDesc: '3 оқиға · оқиғада 20 сыйлық', planMaxDesc: 'Оқиға мен сыйлыққа шек жоқ',
+    planPlusPrice: '₸990 / ай', planMaxPrice: '₸1 990 / ай', subscribeCta: 'Жазылу', restoreCta: 'Сатып алуларды қалпына келтіру', currentTierLabel: 'Сіздің тарифіңіз',
     types: { Wedding: 'Той', Birthday: 'Туған күн', BabyShower: 'Бөбек тойы', Housewarming: 'Үй той', custom: 'Басқа' },
   },
   en: {
@@ -197,8 +209,10 @@ export const tr: Record<'ru' | 'kz' | 'en', Dict> = {
     email: 'Email', deleteAccount: 'Delete account', deleteAccountConfirm: 'Delete your account permanently? Your events and gifts will be removed. This cannot be undone.', confirmDelete: 'Delete', cancelBtn: 'Cancel', notifTitle: 'Notifications', notifEmpty: 'No notifications yet',
     adLabel: 'Ad', adRemove: 'Remove ads with Alaik Plus', plusCta: 'Plus', plusRow: 'Alaik Plus',
     plusTagline: 'More power, no ads', plusB1: 'No ads', plusB2: 'Unlimited events & gifts', plusB3: 'Custom cover photos', plusB4: 'Collaborative lists with co-hosts', plusB5: 'Reminders & premium themes',
-    plusPrice: '₸990 / mo or ₸4,990 / yr', plusSubscribe: 'Get Alaik Plus', plusActive: 'Alaik Plus is active ✨', plusNotReady: 'Billing isn’t set up on this device yet', plusLegal: 'Billed to your Apple ID. Auto-renews; cancel anytime in your Apple ID settings.',
-    limitEvents: 'The free plan allows up to 3 events. Get Plus for unlimited.', limitGifts: 'The free plan allows up to 20 gifts per event. Get Plus to remove the limit.',
+    plusActive: 'Subscription active ✨', plusNotReady: 'Billing isn’t set up on this device yet', plusLegal: 'Billed to your Apple ID. Auto-renews; cancel anytime in your Apple ID settings.',
+    limitEvents: 'Event limit reached. Subscribe to create more.', limitGifts: 'Gift limit reached. Subscribe to add more.',
+    premiumTitle: 'Choose your plan', planPlus: 'Alaik Plus', planMax: 'Alaik Max', planPlusDesc: '3 events · 20 gifts per event', planMaxDesc: 'Unlimited events and gifts',
+    planPlusPrice: '₸990 / mo', planMaxPrice: '₸1,990 / mo', subscribeCta: 'Subscribe', restoreCta: 'Restore purchases', currentTierLabel: 'Your plan',
     types: { Wedding: 'Wedding', Birthday: 'Birthday', BabyShower: 'Baby shower', Housewarming: 'Housewarming', custom: 'Custom' },
   },
 };

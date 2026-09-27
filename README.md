@@ -130,6 +130,8 @@ the review checklist are in [`docs/APP_STORE.md`](docs/APP_STORE.md).
 - **Product links** — paste a store link to auto-pull photo/title (OpenGraph); guests tap
   through to the store. Marketplaces that block scraping fall back to a manual photo URL.
 - **Delete account** — removes the user, their events (cascade) and refresh tokens.
+- **Monetization** — three tiers (Free 1/10 · Plus 3/20 · Max unlimited), free-tier ads,
+  and affiliate link tagging. Setup (RevenueCat, AdMob, affiliate IDs): [`docs/MONETIZATION.md`](docs/MONETIZATION.md).
 
 ## Privacy invariant
 

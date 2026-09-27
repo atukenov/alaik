@@ -9,7 +9,7 @@ public record RefreshDto(string RefreshToken);
 public record AuthResponse(string AccessToken, string RefreshToken, UserDto User);
 public record UserDto(
     Guid Id, string Name, string Email, string? Phone, string? AvatarUrl,
-    bool IsPremium, DateTimeOffset? PremiumUntil);
+    SubscriptionTier Tier, bool IsPremium, DateTimeOffset? SubscriptionUntil);
 
 // ---- Notifications ----
 public record NotificationDto(
