@@ -1,6 +1,8 @@
 PODS:
   - Capacitor (8.4.2):
     - CapacitorCordova
+  - CapacitorApp (8.1.1):
+    - Capacitor
   - CapacitorBrowser (8.0.4):
     - Capacitor
   - CapacitorCommunityAdmob (7.2.0):
@@ -22,6 +24,7 @@ PODS:
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
   - "CapacitorCommunityAdmob (from `../../node_modules/@capacitor-community/admob`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
@@ -38,6 +41,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../node_modules/@capacitor/app"
   CapacitorBrowser:
     :path: "../../node_modules/@capacitor/browser"
   CapacitorCommunityAdmob:
@@ -51,6 +56,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Capacitor: 52f999235b8bd6a7d01694753f4f4d54d182e3a3
+  CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
   CapacitorBrowser: 752e0208aa07c7aa63d1f7cde895a3e9519b2656
   CapacitorCommunityAdmob: 04498ca8d01a097aa7d9d80584094b6b3419ec3f
   CapacitorCordova: 345eacdc4c8282415446aea4acd8c77d82480bd4
@@ -61,6 +67,6 @@ SPEC CHECKSUMS:
   RevenueCat: c44e15b3ee88506da1fdf537c62a6c239cc41b21
   RevenuecatPurchasesCapacitor: 961e591ce1f85e55ce3de9d088278d6c6e8386a3
 
-PODFILE CHECKSUM: 3625a8ab7d2255be75e543d7b18d1a21bf277732
+PODFILE CHECKSUM: 6a829bad6c0036d6d06d62318a4485d8c656f507
 
 COCOAPODS: 1.16.2
