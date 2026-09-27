@@ -3,6 +3,7 @@ import { useEffect, type JSX } from 'react';
 import { useAuth } from './store/auth';
 import { useUi } from './store/ui';
 import { hideBanner } from './lib/ads';
+import { isWeb } from './lib/platform';
 import Onboarding from './pages/Onboarding';
 import Auth from './pages/Auth';
 import Lists from './pages/Lists';
@@ -11,6 +12,7 @@ import Owner from './pages/Owner';
 import Guest from './pages/Guest';
 import Profile from './pages/Profile';
 import Plus from './pages/Plus';
+import WebLanding from './pages/WebLanding';
 
 function RequireAuth({ children }: { children: JSX.Element }) {
   const authed = useAuth((s) => !!s.accessToken);
@@ -24,14 +26,21 @@ function Landing() {
   return <Navigate to={onboarded ? '/auth' : '/onboarding'} replace />;
 }
 
-export default function App() {
-  const location = useLocation();
-  // The ad banner lives only on the Lists screen; make sure it's removed everywhere
-  // else so it can never overlay a form (e.g. the create-event date field).
-  useEffect(() => {
-    if (location.pathname !== '/lists') void hideBanner();
-  }, [location.pathname]);
+/**
+ * On the web the app is GUEST-ONLY: the only real screen is a shared event
+ * link (`/e/:slug`). Onboarding, login, registration, lists and profile exist
+ * solely in the mobile app, so we never mount those routes in a browser.
+ */
+function WebApp() {
+  return (
+    <Routes>
+      <Route path="/e/:slug" element={<Guest />} />
+      <Route path="*" element={<WebLanding />} />
+    </Routes>
+  );
+}
 
+function NativeApp() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
@@ -49,4 +58,15 @@ export default function App() {
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
+}
+
+export default function App() {
+  const location = useLocation();
+  // The ad banner lives only on the Lists screen; make sure it's removed everywhere
+  // else so it can never overlay a form (e.g. the create-event date field).
+  useEffect(() => {
+    if (location.pathname !== '/lists') void hideBanner();
+  }, [location.pathname]);
+
+  return isWeb ? <WebApp /> : <NativeApp />;
 }

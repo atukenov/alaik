@@ -6,7 +6,6 @@ import { useT } from '../lib/i18n';
 import { useUi, type Lang } from '../store/ui';
 import { useAuth } from '../store/auth';
 import { AppShell } from '../components/AppShell';
-import { Placeholder } from '../components/ui';
 import { ChevronIcon, TrashIcon } from '../components/Icons';
 
 const LANGS: [Lang, string][] = [
@@ -40,9 +39,6 @@ export default function Profile() {
   });
 
   const rows = [
-    { label: t.notif },
-    { label: t.settings },
-    { label: t.help },
     {
       label: t.logout,
       danger: true,
@@ -59,12 +55,10 @@ export default function Profile() {
         <h1 className="mb-[18px] mt-1.5 text-2xl font-extrabold">{t.tabProfile}</h1>
 
         <div className="flex items-center gap-3.5 rounded-card border border-line bg-card p-4">
-          <Placeholder label="фото" className="h-[58px] w-[58px] rounded-pill" />
           <div className="min-w-0 flex-1">
             <div className="truncate text-[17px] font-bold">{user?.name ?? ''}</div>
             <div className="truncate text-[13px] font-medium text-muted">{user?.email ?? ''}</div>
           </div>
-          <span className="text-[13px] font-semibold text-accent">{t.editP}</span>
         </div>
 
         <div className="my-3.5 flex gap-3">

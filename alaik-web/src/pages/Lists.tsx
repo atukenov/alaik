@@ -7,7 +7,7 @@ import { useAuth } from '../store/auth';
 import { useUi } from '../store/ui';
 import { coverStyle, formatDate } from '../lib/format';
 import { AppShell } from '../components/AppShell';
-import { ProgressBar, TypeChip, Placeholder } from '../components/ui';
+import { ProgressBar, TypeChip } from '../components/ui';
 import { BellIcon } from '../components/Icons';
 import { AdBanner } from '../components/AdBanner';
 import type { EventSummary } from '../lib/types';
@@ -65,7 +65,6 @@ export default function Lists() {
                 </span>
               )}
             </button>
-            <Placeholder label="фото" className="h-[42px] w-[42px] rounded-pill" />
           </div>
         </div>
 

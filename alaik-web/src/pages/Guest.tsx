@@ -11,6 +11,7 @@ import { ProgressBar, TypeChip, Placeholder } from '../components/ui';
 import { BackIcon, GiftIcon, ShareIcon } from '../components/Icons';
 import { shareLink } from '../lib/share';
 import { openExternal } from '../lib/browser';
+import { isWeb } from '../lib/platform';
 import { ApiError } from '../lib/api';
 import type { GuestItem } from '../lib/types';
 
@@ -85,12 +86,16 @@ export default function Guest() {
               'repeating-linear-gradient(135deg,rgba(224,102,79,.08) 0 10px,transparent 10px 20px),linear-gradient(0deg,#f6e6df,#f6e6df)',
           }}
         >
-          <button
-            onClick={() => (isAuthed ? nav(-1) : nav('/onboarding'))}
-            className="tapc flex h-10 w-10 items-center justify-center rounded-pill bg-white/70 backdrop-blur"
-          >
-            <BackIcon />
-          </button>
+          {/* Guests on the web have no app screens to go back to; only show a
+              back control inside the mobile app. */}
+          {!isWeb && (
+            <button
+              onClick={() => (isAuthed ? nav(-1) : nav('/onboarding'))}
+              className="tapc flex h-10 w-10 items-center justify-center rounded-pill bg-white/70 backdrop-blur"
+            >
+              <BackIcon />
+            </button>
+          )}
           <span className="absolute right-[18px] top-4 h-[13px] w-[13px] rotate-45 bg-accent2" />
           <div>
             <TypeChip label={typeLabel(t, ev.type)} />
