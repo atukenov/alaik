@@ -84,14 +84,19 @@ export async function hideBanner(): Promise<void> {
 }
 
 // ---- Interstitial (full-screen) ----
-// Show at natural break points only, and no more than once every few minutes.
-const INTERSTITIAL_MIN_INTERVAL_MS = 3 * 60 * 1000; // 3 minutes
+// Shown periodically at natural break points (screen transitions), but never
+// more often than this interval. Tune with VITE_INTERSTITIAL_INTERVAL_SEC.
+const DEFAULT_INTERSTITIAL_INTERVAL_SEC = 120; // 2 minutes
+function interstitialIntervalMs(): number {
+  const sec = Number(import.meta.env.VITE_INTERSTITIAL_INTERVAL_SEC);
+  return (Number.isFinite(sec) && sec > 0 ? sec : DEFAULT_INTERSTITIAL_INTERVAL_SEC) * 1000;
+}
 const LAST_KEY = 'alaik_last_interstitial';
 
 function withinCap(): boolean {
   try {
     const last = Number(localStorage.getItem(LAST_KEY) || 0);
-    return Date.now() - last < INTERSTITIAL_MIN_INTERVAL_MS;
+    return Date.now() - last < interstitialIntervalMs();
   } catch {
     return false;
   }
