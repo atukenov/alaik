@@ -3,32 +3,64 @@ PODS:
     - CapacitorCordova
   - CapacitorBrowser (8.0.4):
     - Capacitor
+  - CapacitorCommunityAdmob (7.2.0):
+    - Capacitor
+    - Google-Mobile-Ads-SDK (= 12.12.0)
+    - GoogleUserMessagingPlatform (= 3.0.0)
   - CapacitorCordova (8.4.2)
   - CapacitorShare (8.0.1):
     - Capacitor
+  - Google-Mobile-Ads-SDK (12.12.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
+  - GoogleUserMessagingPlatform (3.0.0)
+  - PurchasesHybridCommon (19.3.1):
+    - RevenueCat (= 5.90.2)
+  - RevenueCat (5.90.2)
+  - RevenuecatPurchasesCapacitor (13.6.1):
+    - Capacitor
+    - PurchasesHybridCommon (= 19.3.1)
 
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorBrowser (from `../../node_modules/@capacitor/browser`)"
+  - "CapacitorCommunityAdmob (from `../../node_modules/@capacitor-community/admob`)"
   - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
+  - "RevenuecatPurchasesCapacitor (from `../../node_modules/@revenuecat/purchases-capacitor`)"
+
+SPEC REPOS:
+  trunk:
+    - Google-Mobile-Ads-SDK
+    - GoogleUserMessagingPlatform
+    - PurchasesHybridCommon
+    - RevenueCat
 
 EXTERNAL SOURCES:
   Capacitor:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorBrowser:
     :path: "../../node_modules/@capacitor/browser"
+  CapacitorCommunityAdmob:
+    :path: "../../node_modules/@capacitor-community/admob"
   CapacitorCordova:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorShare:
     :path: "../../node_modules/@capacitor/share"
+  RevenuecatPurchasesCapacitor:
+    :path: "../../node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 52f999235b8bd6a7d01694753f4f4d54d182e3a3
   CapacitorBrowser: 752e0208aa07c7aa63d1f7cde895a3e9519b2656
+  CapacitorCommunityAdmob: 04498ca8d01a097aa7d9d80584094b6b3419ec3f
   CapacitorCordova: 345eacdc4c8282415446aea4acd8c77d82480bd4
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
+  Google-Mobile-Ads-SDK: 4dde70a8c18d96b14f9548759b8cec6ecb0bc3e6
+  GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
+  PurchasesHybridCommon: c364d4198150bf4027b00fcada9b4ddc280df108
+  RevenueCat: c44e15b3ee88506da1fdf537c62a6c239cc41b21
+  RevenuecatPurchasesCapacitor: 961e591ce1f85e55ce3de9d088278d6c6e8386a3
 
-PODFILE CHECKSUM: 76e1be550c39443508c99c2d8bc39a54aa7f4422
+PODFILE CHECKSUM: 3625a8ab7d2255be75e543d7b18d1a21bf277732
 
 COCOAPODS: 1.16.2

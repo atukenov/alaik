@@ -33,8 +33,15 @@ export async function initBilling(): Promise<void> {
  * returns the entitled tier (the backend also learns of it via the RC webhook).
  * On web/dev it calls the dev endpoint so the flow stays testable.
  */
+function revenueCatConfigured(): boolean {
+  return !!(import.meta.env.VITE_REVENUECAT_IOS_KEY as string | undefined);
+}
+
 export async function purchaseTier(tier: PaidTier, userId: string): Promise<Tier> {
-  if (!Capacitor.isNativePlatform()) {
+  // Web, or a device build without RevenueCat keys yet (e.g. Simulator testing):
+  // use the backend test-upgrade so the flow is exercisable. Requires the API's
+  // Billing:AllowDevTier flag (or Development). Remove once RevenueCat is live.
+  if (!Capacitor.isNativePlatform() || !revenueCatConfigured()) {
     const res = await api.devSetTier(tier);
     return res.tier as Tier;
   }

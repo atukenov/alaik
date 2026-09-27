@@ -23,7 +23,10 @@ public class BillingController(
     [HttpPost("dev-set-tier")]
     public async Task<IActionResult> DevSetTier(SetTierDto dto)
     {
-        if (!env.IsDevelopment()) return NotFound();
+        // Enabled in Development, or on any host when Billing:AllowDevTier=true.
+        // Turn the flag OFF before public launch — it lets a user set their own tier.
+        if (!env.IsDevelopment() && !config.GetValue<bool>("Billing:AllowDevTier"))
+            return NotFound();
         var userId = User.GetUserId();
         if (userId is null) return Unauthorized();
         if (!Enum.TryParse<SubscriptionTier>(dto.Tier, ignoreCase: true, out var tier))
