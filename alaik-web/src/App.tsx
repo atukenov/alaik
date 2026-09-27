@@ -1,7 +1,8 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import type { JSX } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useEffect, type JSX } from 'react';
 import { useAuth } from './store/auth';
 import { useUi } from './store/ui';
+import { hideBanner } from './lib/ads';
 import Onboarding from './pages/Onboarding';
 import Auth from './pages/Auth';
 import Lists from './pages/Lists';
@@ -24,6 +25,13 @@ function Landing() {
 }
 
 export default function App() {
+  const location = useLocation();
+  // The ad banner lives only on the Lists screen; make sure it's removed everywhere
+  // else so it can never overlay a form (e.g. the create-event date field).
+  useEffect(() => {
+    if (location.pathname !== '/lists') void hideBanner();
+  }, [location.pathname]);
+
   return (
     <Routes>
       <Route path="/" element={<Landing />} />

@@ -37,11 +37,30 @@ function testMode(): boolean {
   return !anyReal;
 }
 
+// The banner is a native overlay at the screen bottom. We publish its height to a
+// CSS var so the app can reserve space and never let it cover the tab bar or a form.
+function setBannerSpace(px: number): void {
+  try {
+    document.documentElement.style.setProperty('--ad-banner-h', `${Math.max(0, px)}px`);
+  } catch {
+    /* ignore */
+  }
+}
+
+let sizeListenerAdded = false;
+
 /** Initialize AdMob once on native at startup (also prompts ATT on iOS). */
 export async function initAds(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
-  const { AdMob } = await import('@capacitor-community/admob');
+  const { AdMob, BannerAdPluginEvents } = await import('@capacitor-community/admob');
   await AdMob.initialize({ initializeForTesting: testMode() });
+  if (!sizeListenerAdded) {
+    sizeListenerAdded = true;
+    // Reserve exactly the banner's height whenever it (re)sizes.
+    AdMob.addListener(BannerAdPluginEvents.SizeChanged, (info: { height?: number }) => {
+      setBannerSpace(info?.height ? Number(info.height) : 0);
+    });
+  }
 }
 
 export async function showBanner(): Promise<void> {
@@ -61,6 +80,7 @@ export async function hideBanner(): Promise<void> {
   const { AdMob } = await import('@capacitor-community/admob');
   await AdMob.hideBanner().catch(() => {});
   await AdMob.removeBanner().catch(() => {});
+  setBannerSpace(0);
 }
 
 // ---- Interstitial (full-screen) ----

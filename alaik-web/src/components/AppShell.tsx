@@ -15,7 +15,11 @@ interface AppShellProps {
 export function AppShell({ children, tab }: AppShellProps) {
   return (
     <div className="min-h-dvh flex justify-center sm:items-start">
-      <div className="relative flex w-full max-w-[430px] h-dvh flex-col overflow-hidden bg-bg text-text sm:my-6 sm:h-[calc(100dvh-3rem)] sm:rounded-[32px] sm:border sm:border-line sm:shadow-2xl">
+      {/* padding-bottom reserves space for the native ad banner (0 when none). */}
+      <div
+        className="relative flex w-full max-w-[430px] h-dvh flex-col overflow-hidden bg-bg text-text sm:my-6 sm:h-[calc(100dvh-3rem)] sm:rounded-[32px] sm:border sm:border-line sm:shadow-2xl"
+        style={{ paddingBottom: 'var(--ad-banner-h, 0px)' }}
+      >
         <div className="no-scrollbar flex-1 overflow-y-auto">{children}</div>
         {tab && <TabBar active={tab} />}
       </div>

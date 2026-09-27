@@ -29,8 +29,14 @@ body {
     @apply cursor-pointer transition-transform duration-100 ease-out active:scale-[0.97];
   }
   .field {
-    @apply w-full border-[1.5px] border-line rounded-field bg-card px-4 text-[15px]
-      text-text outline-none placeholder:text-muted focus:border-accent;
+    @apply w-full min-w-0 max-w-full box-border border-[1.5px] border-line rounded-field
+      bg-card px-4 text-[15px] text-text outline-none placeholder:text-muted focus:border-accent;
+  }
+  /* iOS <input type="date"> has a large intrinsic width and, as a flex child, would
+     overflow off-screen; keep it inside its box. */
+  input[type='date'].field {
+    -webkit-appearance: none;
+    appearance: none;
   }
   .btn-primary {
     @apply w-full h-[54px] rounded-pill bg-primary text-white font-bold text-base
