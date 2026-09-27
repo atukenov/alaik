@@ -36,7 +36,11 @@ export default function Owner() {
 
   const share = async () => {
     if (!ev) return;
-    const url = `${window.location.origin}/e/${ev.slug}`;
+    // Guests open the link in a browser (no app needed). Inside the native app
+    // window.location.origin is "https://localhost", so use the public web URL
+    // when configured; on the web it falls back to the current origin.
+    const base = import.meta.env.VITE_PUBLIC_WEB_URL || window.location.origin;
+    const url = `${base.replace(/\/$/, '')}/e/${ev.slug}`;
     const copied = await shareLink(ev.title, url);
     if (copied) {
       setToast(t.linkCopied);
