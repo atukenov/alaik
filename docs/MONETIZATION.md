@@ -136,20 +136,32 @@ npx cap open ios        # Xcode: set your Signing Team; no extra capability need
 Code involved: `alaik-web/src/lib/ads.ts` and `alaik-web/src/components/AdBanner.tsx`.
 Ads show only for free users and only inside the app (never on the public guest list).
 
-### 2.1 AdMob account + app + ad unit
+### 2.1 AdMob account + app + ad units
 1. https://admob.google.com → sign in → **Apps → Add app**.
 2. Platform iOS. If not on the App Store yet, choose "No, it's not listed yet" — you can
    link the real App Store id later.
 3. Copy the **AdMob App ID** for iOS: looks like `ca-app-pub-XXXXXXXX~YYYYYYYY` (with `~`).
-4. In that app → **Ad units → Add ad unit → Banner**. Name it e.g. `alaik-ios-banner`.
-   Copy the **Ad unit ID**: `ca-app-pub-XXXXXXXX/ZZZZZZZZ` (with `/`).
+4. In that app → **Ad units → Add ad unit**, create two:
+   - a **Banner** unit → id `ca-app-pub-XXXXXXXX/ZZZZZZZZ`
+   - an **Interstitial** unit (full-screen) → id `ca-app-pub-XXXXXXXX/IIIIIIII`
 
 ### 2.2 App env
 `alaik-web/.env.production`:
 ```
 VITE_ADMOB_IOS_BANNER=ca-app-pub-XXXXXXXX/ZZZZZZZZ
+VITE_ADMOB_IOS_INTERSTITIAL=ca-app-pub-XXXXXXXX/IIIIIIII
 VITE_ADMOB_ANDROID_BANNER=            # only if you ship Android
+VITE_ADMOB_ANDROID_INTERSTITIAL=      # only if you ship Android
 ```
+
+### 2.2b Interstitial (full-screen) ads
+- Shown **after creating an event** (a natural break), free tier only, and **capped to
+  once every 3 minutes** (`INTERSTITIAL_MIN_INTERVAL_MS` in `src/lib/ads.ts`).
+- The "wait, then close (✕)" countdown is controlled by AdMob — you can't shorten it.
+- Keep them infrequent and only at transitions; Apple/Google reject apps that show
+  interstitials mid-task, on launch before content, or too often. To add more triggers,
+  call `maybeShowInterstitial(isPremium)` at other completion points.
+- Until you set the env id, Google's **test interstitial** shows (safe on the Simulator).
 
 ### 2.3 Native config (iOS Info.plist)
 Add to `ios/App/App/Info.plist` (edit in Xcode or the file directly):

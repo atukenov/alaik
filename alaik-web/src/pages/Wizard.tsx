@@ -7,6 +7,8 @@ import { coverStyle } from '../lib/format';
 import { AppShell } from '../components/AppShell';
 import { TypeChip } from '../components/ui';
 import { BackIcon } from '../components/Icons';
+import { maybeShowInterstitial } from '../lib/ads';
+import { useAuth } from '../store/auth';
 import type { EventType } from '../lib/types';
 
 const TYPES: EventType[] = ['Wedding', 'Birthday', 'BabyShower', 'Housewarming'];
@@ -15,6 +17,7 @@ export default function Wizard() {
   const t = useT();
   const nav = useNavigate();
   const qc = useQueryClient();
+  const isPremium = useAuth((s) => !!s.user?.isPremium);
   const [step, setStep] = useState(0);
   const [type, setType] = useState<EventType>('Birthday');
   const [title, setTitle] = useState('');
@@ -26,6 +29,8 @@ export default function Wizard() {
     onSuccess: (ev) => {
       qc.invalidateQueries({ queryKey: ['events'] });
       nav(`/event/${ev.id}`, { replace: true });
+      // Full-screen ad at a natural completion moment (free tier, time-capped).
+      void maybeShowInterstitial(isPremium);
     },
     onError: (err) => {
       if (err instanceof ApiError && err.status === 402) {
